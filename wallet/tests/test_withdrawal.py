@@ -1,10 +1,10 @@
 import unittest
-from wallet import Wallet
+from wallet.wallet import Wallet
+from wallet.currencies import Currency
 
 class TestWithdrawal(unittest.TestCase):
   def setUp(self):
-    self.wallet = Wallet()
-    self.wallet.deposit(1000)
+    self.wallet = Wallet(currency=Currency.EUR, initial_balance=1000, owner='Test User')
 
   def test_withdraw(self):
     self.wallet.withdraw(500)
