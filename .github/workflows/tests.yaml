@@ -1,0 +1,26 @@
+name: PR and Commit Workflow
+
+on:
+  pull_request: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        id: python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | ${{ steps.python.outputs.python-path }}
+          pipenv sync --dev
+
+      - name: Run tests
+        run: pipenv run pytest
