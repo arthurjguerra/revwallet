@@ -12,8 +12,18 @@ Simple Web application to practice infrastructure as code, CI/CD, immutable infr
 - [ ] Add all tests to CICD
 - [ ] Implement code to spin up the minimal infrastructure required to run this in AWS: networking, DB, container orchestrator.
 
+## How to run the tests?
+```
+pipenv shell
+pipenv sync --dev
+pipenv run pytest
+```
+
 ## How to run it locally?
-TBD.
+```
+pipenv shell
+pipenv install -e .
+```
 
 ## How to run it?
 TBD.
