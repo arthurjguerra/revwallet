@@ -19,7 +19,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | ${{ steps.python.outputs.python-path }}
+          pip install pipenv
           pipenv sync --dev
 
       - name: Run tests
