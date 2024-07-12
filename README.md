@@ -11,6 +11,7 @@ Simple Web application to practice infrastructure as code, CI/CD, immutable infr
 - [ ] Implement integration tests to check if all operations work from end to end.
 - [ ] Add all tests to CICD
 - [ ] Implement code to spin up the minimal infrastructure required to run this in AWS: networking, DB, container orchestrator.
+- [ ] Implement nice error page
 
 ## How to run the tests?
 ```

@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask
+from flask import Flask, request
 
 def create_app(test_config=None):
     # create and configure the app
@@ -26,16 +26,25 @@ def create_app(test_config=None):
     def index():
         return 'Welcome to RevWallet'
 
-    @app.route('/balance/<int:account_id>', methods=['GET'])
-    def check_balance(account_id):
+    @app.route('/balance', methods=['GET'])
+    def check_balance():
+        data = request.get_json()
+        account_id = data.get('account_id')
         return f'Check balance of {account_id}'
     
-    @app.route('/deposit/<float:amount>', methods=['POST'])
-    def deposit(amount):
+    @app.route('/deposit', methods=['POST'])
+    def deposit():
+        data = request.get_json()
+        account_id = data.get('account_id')
+        amount = data.get('amount')
+        
         return f'Deposit {amount}'
     
-    @app.route('/withdrawal/<float:amount>', methods=['POST'])
-    def withdraw(amount):
-        return f'Withdraw {amount}'
+    @app.route('/withdrawal', methods=['POST'])
+    def withdraw():
+        data = request.get_json()
+        account_id = data.get('account_id')
+        amount = data.get('amount')
+        return f'Withdrawal {amount}'
 
     return app
