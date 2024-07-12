@@ -28,12 +28,21 @@ def create_app(test_config=None):
     @app.route('/')
     def index():
         return 'Welcome to RevWallet'
+    
+    @app.route('/wallet', methods=['POST'])
+    def create_new_wallet():
+        data = request.get_json()
+        initial_balance = float(data.get('initial_balance'))
+        currency = data.get('currency')
+        owner = data.get('owner')
+        new_wallet = Wallet(currency=currency, initial_balance=initial_balance, owner=owner)
+        return str(new_wallet.id)
 
     @app.route('/balance', methods=['GET'])
     def check_balance():
         data = request.get_json()
         id = data.get('id')
-        return f'Balance of Wallet {id} is {wallet.check_balance()}'
+        return f'{wallet}'
     
     @app.route('/deposit', methods=['POST'])
     def deposit():
