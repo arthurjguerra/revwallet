@@ -1,3 +1,5 @@
+import uuid
+
 class Wallet:
   def __init__(self, currency, initial_balance, owner):
     if initial_balance < 0:
@@ -6,18 +8,19 @@ class Wallet:
     self.currency = currency
     self.balance = initial_balance
     self.owner = owner
+    self.id = 1234 # uuid.uuid4()
 
-  def check_balance(self):
-    return self.balance
+  def check_balance(self) -> str:
+    return f'{self.balance} {self.currency}'
 
-  def withdraw(self, amount):
+  def withdrawal(self, amount) -> None:
     if amount <= 0:
       raise ValueError('Amount must be positive')
     if amount > self.balance:
       raise ValueError('Amount must be less than the balance')
     self.balance -= amount
 
-  def deposit(self, amount):
+  def deposit(self, amount) -> None:
     if amount < 0:
       raise ValueError('You cannot deposit a negative amount')
     self.balance += amount

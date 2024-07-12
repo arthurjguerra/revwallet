@@ -10,7 +10,7 @@ class TestDeposit(unittest.TestCase):
 
   def test_deposit(self):
     self.test_wallet.deposit(500)
-    self.assertEqual(self.test_wallet.check_balance(), 1500)
+    self.assertEqual(self.test_wallet.check_balance(), '1500 EUR')
 
   def test_deposit_negative(self):
     with self.assertRaises(ValueError):
