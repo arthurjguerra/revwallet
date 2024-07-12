@@ -8,7 +8,7 @@ class Wallet:
     self.currency = currency
     self.balance = initial_balance
     self.owner = owner
-    self.id = 1234 # uuid.uuid4()
+    self.id = uuid.uuid4()
 
   def check_balance(self) -> str:
     return f'{self.balance} {self.currency}'
