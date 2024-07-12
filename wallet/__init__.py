@@ -1,6 +1,8 @@
 import os
 
 from flask import Flask, request
+from wallet.currencies import Currency
+from wallet.wallet import Wallet
 
 def create_app(test_config=None):
     # create and configure the app
@@ -9,6 +11,7 @@ def create_app(test_config=None):
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'wallet.sqlite'),
     )
+    wallet = Wallet(currency=Currency.EUR, initial_balance=1000, owner='My User')
 
     if test_config:
         # test configuration
@@ -29,22 +32,23 @@ def create_app(test_config=None):
     @app.route('/balance', methods=['GET'])
     def check_balance():
         data = request.get_json()
-        account_id = data.get('account_id')
-        return f'Check balance of {account_id}'
+        id = data.get('id')
+        return f'Balance of Wallet {id} is {wallet.check_balance()}'
     
     @app.route('/deposit', methods=['POST'])
     def deposit():
         data = request.get_json()
-        account_id = data.get('account_id')
-        amount = data.get('amount')
-        
+        id = data.get('id')
+        amount = float(data.get('amount'))
+        wallet.deposit(amount)
         return f'Deposit {amount}'
     
     @app.route('/withdrawal', methods=['POST'])
     def withdraw():
         data = request.get_json()
-        account_id = data.get('account_id')
-        amount = data.get('amount')
+        id = data.get('id')
+        amount = float(data.get('amount'))
+        wallet.withdrawal(amount)
         return f'Withdrawal {amount}'
 
     return app
