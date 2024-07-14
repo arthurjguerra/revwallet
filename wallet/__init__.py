@@ -1,8 +1,9 @@
 import os
 
 from flask import Flask
-from wallet.wallet import db
-import wallet.app as app_routes
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
 
 def create_app(test_config=None):
     # create and configure the app
@@ -28,8 +29,8 @@ def create_app(test_config=None):
         print(f'{app.instance_path} directory already exists.')
 
     with app.app_context():
+        from . import routes
+        app.register_blueprint(routes.bp)
         db.create_all()
-
-    app.register_blueprint(app_routes.bp)
 
     return app

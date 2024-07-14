@@ -24,7 +24,10 @@ pipenv run pytest
 ```
 pipenv shell
 pipenv install -e .
+flask --app wallet run --debug  # run flask in debug mode
 ```
+
+Access the app at http://127.0.0.1:5000/
 
 ## How to run it?
 TBD.
