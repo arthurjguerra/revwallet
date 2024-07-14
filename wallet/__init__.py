@@ -1,17 +1,19 @@
 import os
 
-from flask import Flask, request
-from wallet.currencies import Currency
-from wallet.wallet import Wallet
+from flask import Flask
+from wallet.wallet import db
+import wallet.app as app_routes
 
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'wallet.sqlite'),
+        SQLALCHEMY_DATABASE_URI=f'sqlite:///{os.path.join(app.instance_path, "wallet.db")}',
+        SQLALCHEMY_TRACK_MODIFICATIONS=False,
     )
-    wallet = Wallet(currency=Currency.EUR, initial_balance=1000, owner='My User')
+
+    db.init_app(app)
 
     if test_config:
         # test configuration
@@ -25,39 +27,9 @@ def create_app(test_config=None):
     except OSError:
         print(f'{app.instance_path} directory already exists.')
 
-    @app.route('/')
-    def index():
-        return 'Welcome to RevWallet'
-    
-    @app.route('/wallet', methods=['POST'])
-    def create_new_wallet():
-        data = request.get_json()
-        initial_balance = float(data.get('initial_balance'))
-        currency = data.get('currency')
-        owner = data.get('owner')
-        new_wallet = Wallet(currency=currency, initial_balance=initial_balance, owner=owner)
-        return str(new_wallet.id)
+    with app.app_context():
+        db.create_all()
 
-    @app.route('/balance', methods=['GET'])
-    def check_balance():
-        data = request.get_json()
-        id = data.get('id')
-        return f'{wallet}'
-    
-    @app.route('/deposit', methods=['POST'])
-    def deposit():
-        data = request.get_json()
-        id = data.get('id')
-        amount = float(data.get('amount'))
-        wallet.deposit(amount)
-        return f'Deposit {amount}'
-    
-    @app.route('/withdrawal', methods=['POST'])
-    def withdraw():
-        data = request.get_json()
-        id = data.get('id')
-        amount = float(data.get('amount'))
-        wallet.withdrawal(amount)
-        return f'Withdrawal {amount}'
+    app.register_blueprint(app_routes.bp)
 
     return app
