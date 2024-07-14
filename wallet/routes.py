@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
-from wallet.wallet import Wallet, db
+from .wallet import Wallet, db
 
-bp = Blueprint('app', __name__)
+bp = Blueprint('wallet', __name__)
 
 @bp.route('/')
 def index():

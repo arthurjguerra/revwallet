@@ -1,15 +1,12 @@
 import uuid
-from sqlalchemy import Column, String, Float
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from . import db
 
 class Wallet(db.Model):
   __tablename__ = 'wallets'
-  id = Column(String, primary_key=True, nullable=False)
-  currency = Column(String, nullable=False)
-  balance = Column(Float, nullable=False)
-  owner = Column(String, nullable=False)
+  id = db.Column(db.String, primary_key=True, nullable=False)
+  currency = db.Column(db.String, nullable=False)
+  balance = db.Column(db.Float, nullable=False)
+  owner = db.Column(db.String, nullable=False)
 
   def __init__(self, currency, initial_balance, owner):
     if initial_balance < 0:
