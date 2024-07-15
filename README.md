@@ -9,7 +9,6 @@ Simple Web application to practice infrastructure as code, CI/CD, immutable infr
 - [X] Create a database that will be used to persist all three operations supported by the wallet API.
 - [X] Have the DB + the app running locally using Docker.
 - [X] Implement integration tests to check if all operations work from end to end.
-- [ ] Add all tests to CICD
 - [ ] Implement code to spin up the minimal infrastructure required to run this in AWS: networking, DB, container orchestrator.
 - [ ] Implement nice error page
 
