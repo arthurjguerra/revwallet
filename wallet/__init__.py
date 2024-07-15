@@ -30,7 +30,7 @@ def create_app(test_config=None):
 
     with app.app_context():
         from . import routes
-        app.register_blueprint(routes.bp)
+        app.register_blueprint(routes.bp, url_prefix='/wallet')
         db.create_all()
 
     return app
