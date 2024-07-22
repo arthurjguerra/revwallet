@@ -6,22 +6,27 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 def create_app(test_config=None):
-    # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
-        SECRET_KEY='dev',
-        SQLALCHEMY_DATABASE_URI=f'sqlite:///{os.path.join(app.instance_path, "wallet.db")}',
-        SQLALCHEMY_TRACK_MODIFICATIONS=False,
-    )
-
-    db.init_app(app)
 
     if test_config:
         # test configuration
         app.config.from_mapping(test_config)
     else:
         # production configuration
-        app.config.from_pyfile('config.py', silent=True)
+        # app.config.from_pyfile('config.py', silent=True)
+        db_name = os.environ.get('DB_NAME')
+        db_host = os.environ.get('DB_HOST')
+        db_username = os.environ.get('DB_USERNAME')
+        db_password = os.environ.get('DB_PASSWORD')
+        db_uri = f"postgresql://{db_username}:{db_password}@{db_host}/{db_name}"
+
+        app.config.from_mapping(
+            SECRET_KEY='dev',
+            SQLALCHEMY_DATABASE_URI=db_uri,
+            SQLALCHEMY_TRACK_MODIFICATIONS=False,
+        )
+
+    db.init_app(app)
 
     try:
         os.makedirs(app.instance_path)
