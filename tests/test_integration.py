@@ -8,6 +8,7 @@ class TestWalletIntegration(unittest.TestCase):
    
   def setUp(self):
     self.app = create_app(test_config={
+      'SECRET_KEY': 'dev',
       'SQLALCHEMY_DATABASE_URI': 'sqlite:///:memory:',
       'SQLALCHEMY_TRACK_MODIFICATIONS': False,
     })

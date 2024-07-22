@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 flask = "3.0.3"
 flask-sqlalchemy = "*"
+psycopg2 = "*"
 
 [dev-packages]
 pytest = "*"
