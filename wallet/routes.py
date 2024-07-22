@@ -8,7 +8,7 @@ def index():
     with db.session() as session:
         wallets = session.query(Wallet).all()
         return jsonify([wallet.to_dict() for wallet in wallets])
-
+    
 @bp.route('/new', methods=['POST'])
 def create_new_wallet():
     data = request.get_json()
