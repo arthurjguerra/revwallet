@@ -1,7 +1,7 @@
 services:
-  db:
+  revwallet_db:
     image: postgres:latest
-    container_name: postgres_db
+    container_name: revwallet_db
     environment:
       POSTGRES_USER: myuser
       POSTGRES_PASSWORD: mypassword
@@ -12,22 +12,32 @@ services:
       - db_data:/var/lib/postgresql/data
     networks:
       - revwallet_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d revwallet -U myuser"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-  revwallet:
-    image: revwallet:latest
-    container_name: revwallet_app
+  revwallet_api:
+    image: arthurjguerra18/revwallet:${GITHUB_SHA:-test}
+    container_name: revwallet_api
+    build:
+      context: .
+      dockerfile: Dockerfile
     depends_on:
-      - db
+      revwallet_db:
+        condition: service_healthy
     environment:
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
-      POSTGRES_DB: revwallet
+      DB_USERNAME: myuser
+      DB_PASSWORD: mypassword
+      DB_NAME: revwallet
+      DB_HOST: revwallet_db
     ports:
       - "5000:5000"
     networks:
       - revwallet_network
     links:
-      - db
+      - revwallet_db
 
 networks:
   revwallet_network:
