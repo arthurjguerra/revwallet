@@ -1,4 +1,4 @@
-FROM python:3.11.9-alpine
+FROM python:3.11-slim
 
 WORKDIR /revwallet
 
@@ -7,9 +7,11 @@ COPY app.py .
 COPY Pipfile .
 COPY Pipfile.lock .
 
-RUN python -m pip install pipenv
+RUN apt-get update && \
+  apt-get install -y gcc libpq-dev
 
-RUN python -m pipenv install --system --deploy --ignore-pipfile
+RUN python -m pip install pipenv && \
+  python -m pipenv install --system --deploy --ignore-pipfile
 
 EXPOSE 5000
 

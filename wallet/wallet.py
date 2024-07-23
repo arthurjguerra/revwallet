@@ -1,9 +1,10 @@
 import uuid
 from . import db
+from sqlalchemy.dialects.postgresql import UUID
 
 class Wallet(db.Model):
   __tablename__ = 'wallets'
-  id = db.Column(db.String, primary_key=True, nullable=False)
+  id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
   currency = db.Column(db.String, nullable=False)
   balance = db.Column(db.Float, nullable=False)
   owner = db.Column(db.String, nullable=False)
@@ -12,7 +13,6 @@ class Wallet(db.Model):
     if initial_balance < 0:
       raise ValueError('Initial balance cannot be negative')
 
-    self.id = str(uuid.uuid4())
     self.currency = currency
     self.balance = initial_balance
     self.owner = owner
@@ -37,7 +37,7 @@ class Wallet(db.Model):
   
   def to_dict(self):
     return {
-      'id': self.id,
+      'id': str(self.id),
       'currency': self.currency,
       'balance': self.balance,
       'owner': self.owner,
