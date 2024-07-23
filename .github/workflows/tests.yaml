@@ -36,5 +36,12 @@ jobs:
           pip install pipenv
           pipenv sync --dev
 
+      - name: Start containers
+        run: docker compose up -d --build
+
       - name: Run tests
         run: pipenv run pytest
+      
+      - name: Stop containers and remove volumes
+        if: always()
+        run: docker compose down -v
