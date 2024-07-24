@@ -59,7 +59,7 @@ class TestCheckBalance(unittest.TestCase):
     except Exception:
       pass
 
-    self.assertEqual(self.test_wallet.check_balance(), '1000 EUR')
+    self.assertEqual(self.test_wallet.check_balance(), '0 EUR')
     
 
 if __name__ == '__main__':
