@@ -27,5 +27,14 @@ class TestWithdraw(unittest.TestCase):
     self.wallet.withdraw(200)
     self.assertEqual(self.wallet.balance, 500)
 
+  def test_withdraw_multiple_times_with_insufficient_balance(self):
+    with self.assertRaises(ValueError):
+      self.wallet.withdraw(1000)
+      self.wallet.withdraw(1)
+
+  def test_withdraw_fractional_amount(self):
+    self.wallet.withdraw(0.5)
+    self.assertEqual(self.wallet.balance, 999.5)
+
 if __name__ == '__main__':
   unittest.main()

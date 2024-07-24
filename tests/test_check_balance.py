@@ -49,11 +49,7 @@ class TestCheckBalance(unittest.TestCase):
     self.assertEqual(self.test_wallet.check_balance(), '1500 EUR')
 
   def test_check_balance_after_invalid_withdraw_and_deposit(self):
-    try:
-      self.test_wallet.withdraw(1000)
-    except Exception:
-      pass
-
+    self.test_wallet.withdraw(1000)
     try:
       self.test_wallet.deposit(-200)
     except Exception:
