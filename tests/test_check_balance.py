@@ -56,6 +56,27 @@ class TestCheckBalance(unittest.TestCase):
       pass
 
     self.assertEqual(self.test_wallet.check_balance(), '0 EUR')
+
+  def test_check_balance_after_multiple_withdrawals_and_deposits(self):
+    self.test_wallet.withdraw(100)
+    self.test_wallet.withdraw(50)
+    self.test_wallet.deposit(200)
+    self.test_wallet.deposit(300)
+    self.assertEqual(self.test_wallet.check_balance(), '900 EUR')
+
+  def test_check_balance_after_zero_balance(self):
+    self.test_wallet.withdraw(1000)
+    self.assertEqual(self.test_wallet.check_balance(), '0 EUR')
+
+  def test_check_balance_after_large_deposit(self):
+    self.test_wallet.deposit(1000000)
+    self.assertEqual(self.test_wallet.check_balance(), '1001000 EUR')
+
+  def test_check_balance_after_large_withdrawal(self):
+    self.test_wallet.withdraw(1000)
+    self.test_wallet.deposit(1000000)
+    self.test_wallet.withdraw(999999)
+    self.assertEqual(self.test_wallet.check_balance(), '1 EUR')
     
 
 if __name__ == '__main__':
