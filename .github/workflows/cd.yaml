@@ -1,0 +1,74 @@
+name: tests
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Python
+        id: python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install pipenv
+          pipenv sync --dev
+
+      - name: Start containers
+        run: docker compose up -d --build
+
+      - name: Run tests
+        run: pipenv run pytest
+      
+      - name: Stop containers and remove volumes
+        if: always()
+        run: docker compose down -v
+
+  build:
+    depends-on: tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build and push images (main)
+        if: github.ref == 'refs/heads/main'
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: arthurjguerra18/revwallet:main-${{ github.sha }}
+
+      - name: Get the tag
+        if: startsWith(github.ref, 'refs/tags/')
+        id: get_tag
+        run: |
+          echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Build and push images (release)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: arthurjguerra18/revwallet:${{ steps.get_tag.outputs.tag }}
