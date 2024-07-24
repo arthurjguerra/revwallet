@@ -9,27 +9,47 @@ Simple Web application to practice infrastructure as code, CI/CD, immutable infr
 - [X] Create a database that will be used to persist all three operations supported by the wallet API.
 - [X] Have the DB + the app running locally using Docker.
 - [X] Implement integration tests to check if all operations work from end to end.
+- [ ] Build and publish docker images from GHA
 - [ ] Implement code to spin up the minimal infrastructure required to run this in AWS: networking, DB, container orchestrator.
-- [ ] Implement nice error page
+
+## How to run it locally?
+
+```
+pipenv shell
+pipenv install -e .
+docker compose up --build -d  # this will build the images and run the containers
+```
+
+Docker Compose will bring up a database container (`revwallet_db`) and the API container (`revwallet_api`). Once the pods are up and running, you can interact with the API:
+```
+# fetch existing wallets
+curl -X GET http://127.0.0.1:5000/wallet/
+# example of response: [] or [{"balance":999.0,"currency":"EUR","id":"1","owner":"test2"}]
+
+# create a new wallet
+curl -X POST http://127.0.0.1:5000/wallet/ -d '{"owner": "test2", "initial_balance": "999.00", "currency": "EUR"}' -H "Content-Type: application/json"
+# example of response: {"balance":999.0,"currency":"EUR","id":"1","owner":"test2"}
+
+# check current balance
+curl -X GET http://127.0.0.1:5000/wallet/balance/1
+# example of response: {"balance":999.0,"currency":"EUR","id":"1","owner":"test2"}
+
+```
+
+If you want to see the logs of the app, run:
+```
+docker compose logs revwallet_api --follow
+```
+
+To shut everything down, run:
+```
+docker compose down -v
+```
 
 ## How to run the tests?
 ```
 pipenv shell
 pipenv sync --dev
+docker compose up --build -d
 pipenv run pytest
 ```
-
-## How to run it locally?
-```
-pipenv shell
-pipenv install -e .
-flask --app wallet run --debug  # run flask in debug mode
-```
-
-Access the app at http://127.0.0.1:5000/
-
-## How to run it?
-TBD.
-
-## Next steps
-TBD.
