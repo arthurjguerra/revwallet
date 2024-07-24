@@ -50,11 +50,6 @@ docker compose down -v
 ```
 pipenv shell
 pipenv sync --dev
+docker compose up --build -d
 pipenv run pytest
 ```
-
-## How to run it?
-TBD.
-
-## Next steps
-TBD.
