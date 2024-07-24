@@ -3,30 +3,26 @@ from .wallet import Wallet, db
 
 bp = Blueprint('wallet', __name__)
 
-@bp.route('/')
+@bp.route('/', methods=['GET', 'POST'])
 def index():
-    with db.session() as session:
-        wallets = session.query(Wallet).all()
-        return jsonify([wallet.to_dict() for wallet in wallets])
+    if request.method == 'GET':
+        with db.session() as session:
+            wallets = session.query(Wallet).all()
+            return jsonify([wallet.to_dict() for wallet in wallets])
+    elif request.method == 'POST':
+        data = request.get_json()
+        initial_balance = float(data.get('initial_balance'))
+        currency = data.get('currency')
+        owner = data.get('owner')
 
-@bp.route('/new', methods=['POST'])
-def create_new_wallet():
-    data = request.get_json()
-    initial_balance = float(data.get('initial_balance'))
-    currency = data.get('currency')
-    owner = data.get('owner')
+        with db.session() as session:
+            new_wallet = Wallet(currency=currency, initial_balance=initial_balance, owner=owner)
+            session.add(new_wallet)
+            session.commit()
+            return jsonify({'id': new_wallet.id}), 201
 
-    with db.session() as session:
-        new_wallet = Wallet(currency=currency, initial_balance=initial_balance, owner=owner)
-        session.add(new_wallet)
-        session.commit()
-        return jsonify({'id': new_wallet.id}), 201
-
-@bp.route('/balance', methods=['GET'])
-def check_balance():
-    data = request.get_json()
-    id = data.get('id')
-
+@bp.route('/balance/<int:id>', methods=['GET'])
+def check_balance(id):
     with db.session() as session:
         wallet = session.get(Wallet, id)
 
