@@ -1,4 +1,4 @@
-name: tests
+name: cd
 
 on:
   push:
@@ -46,7 +46,7 @@ jobs:
         run: docker compose down -v
 
   build:
-    depends-on: tests
+    needs: tests
     runs-on: ubuntu-latest
 
     steps:
