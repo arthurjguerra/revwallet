@@ -43,7 +43,7 @@ class TestWalletE2E(unittest.TestCase):
     self.assertEqual(float(response.json()["balance"]), 1000.00)
 
     # Withdraw from the wallet
-    response = requests.post(f"{self.base_url}/wallet/withdrawal", json={
+    response = requests.post(f"{self.base_url}/wallet/withdraw", json={
         "id": wallet_id,
         "amount": "50.00"
     })

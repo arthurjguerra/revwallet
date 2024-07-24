@@ -47,7 +47,7 @@ def deposit():
         session.commit()
         return jsonify(wallet.to_dict())
 
-@bp.route('/withdrawal', methods=['POST'])
+@bp.route('/withdraw', methods=['POST'])
 def withdraw():
     data = request.get_json()
     id = data.get('id')
@@ -59,6 +59,6 @@ def withdraw():
         if not wallet:
             return f'Wallet {id} not found', 404
 
-        wallet.withdrawal(amount)
+        wallet.withdraw(amount)
         session.commit()
         return jsonify(wallet.to_dict())

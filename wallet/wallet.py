@@ -22,7 +22,7 @@ class Wallet(db.Model):
   def check_balance(self) -> str:
     return f'{self.balance} {self.currency}'
 
-  def withdrawal(self, amount) -> None:
+  def withdraw(self, amount) -> None:
     if amount <= 0:
       raise ValueError('Amount must be positive')
     if amount > self.balance:
