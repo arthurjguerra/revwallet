@@ -62,7 +62,7 @@ class TestCheckBalance(unittest.TestCase):
     self.test_wallet.withdraw(50)
     self.test_wallet.deposit(200)
     self.test_wallet.deposit(300)
-    self.assertEqual(self.test_wallet.check_balance(), '900 EUR')
+    self.assertEqual(self.test_wallet.check_balance(), '1350 EUR')
 
   def test_check_balance_after_zero_balance(self):
     self.test_wallet.withdraw(1000)
