@@ -8,6 +8,7 @@ flask = "3.0.3"
 flask-sqlalchemy = "*"
 psycopg2 = "*"
 requests = "*"
+prometheus-flask-exporter = "*"
 
 [dev-packages]
 pytest = "*"

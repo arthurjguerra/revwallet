@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "a5358c6b1119f00f671cd3fce280cd57ad062fa58d92792c8259549b14902ba1"
+            "sha256": "9bbcf17e6d16688a0cd6fbb49b24f4e4fd1cf733855b1b1e02aec609d7148844"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -308,6 +308,22 @@
             "markers": "python_version >= '3.7'",
             "version": "==2.1.5"
         },
+        "prometheus-client": {
+            "hashes": [
+                "sha256:287629d00b147a32dcb2be0b9df905da599b2d82f80377083ec8463309a4bb89",
+                "sha256:cde524a85bce83ca359cc837f28b8c0db5cac7aa653a588fd7e84ba061c329e7"
+            ],
+            "markers": "python_version >= '3.8'",
+            "version": "==0.20.0"
+        },
+        "prometheus-flask-exporter": {
+            "hashes": [
+                "sha256:587c770a1061e93d72c5cbcdefbd7b633fb764e39dffd7dd16932c9124559244",
+                "sha256:ab49b2c40b57cd35cd51e91e59b3c306b3754477095c4f3cf679034c5122398c"
+            ],
+            "index": "pypi",
+            "version": "==0.23.1"
+        },
         "psycopg2": {
             "hashes": [
                 "sha256:121081ea2e76729acfb0673ff33755e8703d45e926e416cb59bae3a86c6a4981",
@@ -444,12 +460,12 @@
         },
         "pytest": {
             "hashes": [
-                "sha256:7e8e5c5abd6e93cb1cc151f23e57adc31fcf8cfd2a3ff2da63e23f732de35db6",
-                "sha256:e9600ccf4f563976e2c99fa02c7624ab938296551f280835ee6516df8bc4ae8c"
+                "sha256:4ba08f9ae7dcf84ded419494d229b48d0903ea6407b030eaec46df5e6a73bba5",
+                "sha256:c132345d12ce551242c87269de812483f5bcc87cdbb4722e48487ba194f9fdce"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.8'",
-            "version": "==8.3.1"
+            "version": "==8.3.2"
         },
         "pytest-mock": {
             "hashes": [
