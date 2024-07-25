@@ -1,4 +1,17 @@
 services:
+  grafana:
+    image: grafana/grafana:latest
+    entrypoint:
+      - /usr/share/grafana/bin/grafana-server
+      - --homepath=/usr/share/grafana
+      - --config=/etc/grafana-config/grafana.ini
+    volumes:
+      - ./grafana.ini:/etc/grafana-config/grafana.ini
+      - ./grafana-dashboard-config.yaml:/etc/grafana/provisioning/dashboards/grafana-dashboard-config.yaml
+      - ./grafana-dashboard.json:/etc/grafana/dashboards/grafana-dashboard.json
+    ports:
+      - "3000:3000"
+
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
@@ -40,6 +53,8 @@ services:
       revwallet_db:
         condition: service_healthy
       prometheus:
+        condition: service_started
+      grafana:
         condition: service_started
     environment:
       DB_USERNAME: myuser
