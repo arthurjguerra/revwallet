@@ -1,4 +1,16 @@
 services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yaml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yaml'
+    ports:
+      - "9090:9090"
+    networks:
+      - revwallet_network
+
   revwallet_db:
     image: postgres:latest
     container_name: revwallet_db
@@ -27,6 +39,8 @@ services:
     depends_on:
       revwallet_db:
         condition: service_healthy
+      prometheus:
+        condition: service_started
     environment:
       DB_USERNAME: myuser
       DB_PASSWORD: mypassword
