@@ -200,7 +200,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "exemplar": true,
-          "expr": "flask_request_duration_seconds_sum{app_name=\"flask-monitoring\"} / flask_request_duration_seconds_count{app_name=\"flask-monitoring\"}",
+          "expr": "flask_request_duration_seconds_sum{app_name=\"$app_name\"} / flask_request_duration_seconds_count{app_name=\"$app_name\"}",
           "interval": "",
           "legendFormat": "{{method}} {{endpoint}}",
           "refId": "A"

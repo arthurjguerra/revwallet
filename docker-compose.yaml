@@ -8,9 +8,12 @@ services:
     volumes:
       - ./grafana.ini:/etc/grafana-config/grafana.ini
       - ./grafana-dashboard-config.yaml:/etc/grafana/provisioning/dashboards/grafana-dashboard-config.yaml
+      - ./grafana-data-sources.yaml:/etc/grafana/provisioning/datasources/grafana-data-sources.yaml
       - ./grafana-dashboard.json:/etc/grafana/dashboards/grafana-dashboard.json
     ports:
       - "3000:3000"
+    networks:
+      - revwallet_network
 
   prometheus:
     image: prom/prometheus:latest
