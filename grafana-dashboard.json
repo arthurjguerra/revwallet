@@ -28,7 +28,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "revwallet_datasource_id"
       },
       "fieldConfig": {
         "defaults": {
@@ -74,7 +74,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "revwallet_datasource_id"
           },
           "exemplar": true,
           "expr": "sum (flask_request_status_total{app_name=\"$app_name\"})",
@@ -90,7 +90,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "revwallet_datasource_id"
       },
       "fieldConfig": {
         "defaults": {
@@ -136,7 +136,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "revwallet_datasource_id"
           },
           "exemplar": true,
           "expr": "sum (flask_request_status_total{app_name=\"$app_name\"}) by(status)",
@@ -152,7 +152,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "revwallet_datasource_id"
       },
       "fieldConfig": {
         "defaults": {
@@ -197,7 +197,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "revwallet_datasource_id"
           },
           "exemplar": true,
           "expr": "flask_request_duration_seconds_sum{app_name=\"$app_name\"} / flask_request_duration_seconds_count{app_name=\"$app_name\"}",
@@ -212,7 +212,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "revwallet_datasource_id"
       },
       "fieldConfig": {
         "defaults": {
@@ -288,7 +288,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "revwallet_datasource_id"
           },
           "exemplar": true,
           "expr": "flask_request_duration_seconds_count{app_name=\"$app_name\"}",
@@ -303,7 +303,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "revwallet_datasource_id"
       },
       "fieldConfig": {
         "defaults": {
@@ -380,7 +380,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "revwallet_datasource_id"
           },
           "exemplar": true,
           "expr": "rate(flask_request_duration_seconds_count{app_name=\"flask-monitoring\"}[1m])",
@@ -395,7 +395,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "revwallet_datasource_id"
       },
       "fieldConfig": {
         "defaults": {
@@ -473,7 +473,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "revwallet_datasource_id"
           },
           "exemplar": true,
           "expr": "sum(flask_request_status_total{app_name=\"$app_name\", status=~\"2.*\"}) by(endpoint, method) / sum(flask_request_status_total{app_name=\"$app_name\"}) by(endpoint, method)",
@@ -489,7 +489,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "revwallet_datasource_id"
       },
       "description": "",
       "fieldConfig": {
@@ -568,7 +568,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "revwallet_datasource_id"
           },
           "exemplar": true,
           "expr": "sum(flask_request_status_total{app_name=\"$app_name\", status=~\"5.*\"}) by(endpoint, method) / sum(flask_request_status_total{app_name=\"$app_name\"}) by(endpoint, method)",
@@ -584,7 +584,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "revwallet_datasource_id"
       },
       "fieldConfig": {
         "defaults": {
@@ -661,7 +661,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "revwallet_datasource_id"
           },
           "exemplar": true,
           "expr": "flask_request_duration_seconds_sum{app_name=\"$app_name\"} / flask_request_duration_seconds_count{app_name=\"$app_name\"}",
@@ -683,7 +683,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "revwallet_datasource_id"
       },
       "fieldConfig": {
         "defaults": {
@@ -734,7 +734,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "revwallet_datasource_id"
           },
           "exemplar": false,
           "expr": "flask_request_duration_seconds{app_name=\"$app_name\", quantile='0.5'}",
@@ -747,7 +747,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "revwallet_datasource_id"
           },
           "exemplar": false,
           "expr": "flask_request_duration_seconds{app_name=\"$app_name\", quantile='0.9'}",
@@ -761,7 +761,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "revwallet_datasource_id"
           },
           "exemplar": false,
           "expr": "flask_request_duration_seconds{app_name=\"$app_name\", quantile='0.99'}",
@@ -835,7 +835,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "PBFA97CFB590B2093"
+          "uid": "revwallet_datasource_id"
         },
         "definition": "label_values(flask_info{}, app_name)",
         "hide": 0,
