@@ -11,7 +11,7 @@ Simple Web application to practice infrastructure as code, CI/CD, immutable infr
 - [X] Implement integration tests to check if all operations work from end to end.
 - [X] Build and publish docker images from GHA
 - [X] Implement dashboard for monitoring
-- [ ] Implement log aggregation
+- [X] Implement log aggregation
 - [ ] Implement code to spin up the minimal infrastructure required to run this in AWS: networking, DB, container orchestrator.
 
 ## How to run it locally?
@@ -55,3 +55,11 @@ pipenv sync --dev
 docker compose up --build -d
 pipenv run pytest
 ```
+
+## How to generate random data?
+If you want to generate random data, you can run:
+```
+bash scripts/generate-data
+```
+
+This script will create some wallets, check the balance and fetch all wallets from the API.

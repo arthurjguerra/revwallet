@@ -1,15 +1,17 @@
 from flask import Blueprint, request, jsonify
-from .wallet import Wallet, db
+from .wallet import Wallet, db, logger
 
 bp = Blueprint('wallet', __name__)
 
 @bp.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'GET':
+        logger.info('Request to get all wallets from DB')
         with db.session() as session:
             wallets = session.query(Wallet).all()
             return jsonify([wallet.to_dict() for wallet in wallets])
     elif request.method == 'POST':
+        logger.info('Request to create a new wallet')
         data = request.get_json()
         initial_balance = float(data.get('initial_balance'))
         currency = data.get('currency')
@@ -23,6 +25,7 @@ def index():
 
 @bp.route('/balance/<int:id>', methods=['GET'])
 def check_balance(id):
+    logger.info(f'Request to check balance of wallet {id}')
     with db.session() as session:
         wallet = session.get(Wallet, id)
 
@@ -36,6 +39,8 @@ def deposit():
     data = request.get_json()
     id = data.get('id')
     amount = float(data.get('amount'))
+
+    logger.info(f'Request to deposit {amount} to wallet {id}')
     
     with db.session() as session:
         wallet = session.get(Wallet, id)
@@ -52,6 +57,8 @@ def withdraw():
     data = request.get_json()
     id = data.get('id')
     amount = float(data.get('amount'))
+
+    logger.info(f'Request to withdraw {amount} from wallet {id}')
 
     with db.session() as session:
         wallet = session.get(Wallet, id)
