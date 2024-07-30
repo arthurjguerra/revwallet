@@ -1,5 +1,5 @@
 # revwallet
-Simple Web application to practice infrastructure as code, CI/CD, immutable infrastructure, and software development. This application is a basic wallet where a user can add and withdraw money.
+Wallet API where users can deposit, withdraw, and check the balance of a wallet. The objective to practice infrastructure as code, CI/CD, immutable infrastructure, and software development (Python). 
 
 ## TODO
 - [X] Implement unit tests to validate three operations in a wallet: check current wallet balance, deposit money to a wallet and withdraw money from a wallet.
@@ -35,7 +35,6 @@ curl -X POST http://127.0.0.1:5000/wallet/ -d '{"owner": "test2", "initial_balan
 # check current balance
 curl -X GET http://127.0.0.1:5000/wallet/balance/1
 # example of response: {"balance":999.0,"currency":"EUR","id":"1","owner":"test2"}
-
 ```
 
 If you want to see the logs of the app, run:
