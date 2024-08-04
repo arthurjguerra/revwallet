@@ -37,6 +37,7 @@ services:
 
   grafana:
     image: grafana/grafana:latest
+    container_name: grafana
     depends_on:
       loki:
         condition: service_healthy
@@ -48,13 +49,18 @@ services:
       - --config=/etc/grafana-config/grafana.ini
     volumes:
       - ./config/grafana/grafana.ini:/etc/grafana-config/grafana.ini
-      - ./config/grafana/profisioning.yaml:/etc/grafana/provisioning/dashboards/grafana-dashboard-config.yaml
-      - ./config/grafana/data-sources.yaml:/etc/grafana/provisioning/datasources/grafana-data-sources.yaml
-      - ./config/grafana/dashboard.json:/etc/grafana/dashboards/grafana-dashboard.json
+      - ./config/grafana/provisioning.yaml:/etc/grafana/provisioning/dashboards/provisioning.yaml
+      - ./config/grafana/data-sources.yaml:/etc/grafana/provisioning/datasources/data-sources.yaml
+      - ./config/grafana/dashboard.json:/etc/grafana/dashboards/dashboard.json
     ports:
       - "3000:3000"
     networks:
       - revwallet_network
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider --quiet http://admin:admin@localhost:3000/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   prometheus:
     image: prom/prometheus:latest
@@ -67,6 +73,12 @@ services:
       - "9090:9090"
     networks:
       - revwallet_network
+    healthcheck:
+      test: ["CMD", "wget", "http://localhost:9090"]
+      interval: 10s
+      timeout: 15s
+      retries: 10
+      start_period: 40s
 
   revwallet_db:
     image: postgres:latest
@@ -97,9 +109,9 @@ services:
       revwallet_db:
         condition: service_healthy
       prometheus:
-        condition: service_started
+        condition: service_healthy
       grafana:
-        condition: service_started
+        condition: service_healthy
       alloy:
         condition: service_started
     environment:
@@ -115,6 +127,30 @@ services:
       - revwallet_db
     volumes:
       - ./logs/revwallet:/var/log/revwallet
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./config/nginx/.htpasswd:/etc/nginx/.htpasswd
+      - ./config/nginx/index.html:/usr/share/nginx/www/index.html
+      - ./config/nginx/404.html:/usr/share/nginx/www/404.html
+    ports:
+      - "80:80"
+    networks:
+      - revwallet_network
+    depends_on:
+      revwallet_api:
+        condition: service_started
+      prometheus:
+        condition: service_healthy
+      grafana:
+        condition: service_healthy
+      alloy:
+        condition: service_started
+      loki:
+        condition: service_healthy
 
 networks:
   revwallet_network:
