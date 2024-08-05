@@ -4,8 +4,8 @@ services:
     container_name: loki
     volumes:
       - ./config/loki/loki-config.yaml:/etc/loki/local-config.yaml
-    ports:
-      - "3100:3100"
+    # ports:
+    #   - "3100:3100"
     command: -config.file=/etc/loki/local-config.yaml
     networks:
       - revwallet_network
@@ -24,8 +24,8 @@ services:
     volumes:
       - ./config/alloy/config.alloy:/etc/alloy/config.alloy
       - ./logs/revwallet:/var/log/revwallet
-    ports:
-      - "12345:12345"
+    # ports:
+    #   - "12345:12345"
     command: [
       "run",
       "--server.http.listen-addr=0.0.0.0:12345",
@@ -52,8 +52,8 @@ services:
       - ./config/grafana/provisioning.yaml:/etc/grafana/provisioning/dashboards/provisioning.yaml
       - ./config/grafana/data-sources.yaml:/etc/grafana/provisioning/datasources/data-sources.yaml
       - ./config/grafana/dashboard.json:/etc/grafana/dashboards/dashboard.json
-    ports:
-      - "3000:3000"
+    # ports:
+    #   - "3000:3000"
     networks:
       - revwallet_network
     healthcheck:
@@ -71,8 +71,8 @@ services:
       - '--config.file=/etc/prometheus/prometheus.yaml'
       - '--web.external-url=/prometheus/'
       - '--web.route-prefix=/prometheus/'
-    ports:
-      - "9090:9090"
+    # ports:
+    #   - "9090:9090"
     networks:
       - revwallet_network
     healthcheck:
@@ -89,8 +89,8 @@ services:
       POSTGRES_USER: myuser
       POSTGRES_PASSWORD: mypassword
       POSTGRES_DB: revwallet
-    ports:
-      - "5432:5432"
+    # ports:
+    #   - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
     networks:
@@ -121,8 +121,8 @@ services:
       DB_PASSWORD: mypassword
       DB_NAME: revwallet
       DB_HOST: revwallet_db
-    ports:
-      - "5000:5000"
+    # ports:
+    #   - "5000:5000"
     networks:
       - revwallet_network
     links:
