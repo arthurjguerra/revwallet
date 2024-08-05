@@ -1,13 +1,13 @@
 #!/bin/bash
 
-curl -X GET http://127.0.0.1:5000/wallet/
+curl -L -X GET http://revwallet.com/wallet/
 
 for ((i=1; i<=100; i++))
 do
-  curl -X POST http://127.0.0.1:5000/wallet/ \
+  curl -L -X POST http://revwallet.com/wallet/ \
     -H "Content-Type: application/json" \
     -d '{"owner": "test", "initial_balance": "999.00", "currency": "EUR"}'
 
-  curl -X GET "http://127.0.0.1:5000/wallet/balance/$i"
-  curl -X GET http://127.0.0.1:5000/wallet/
+  curl -L -X GET "http://revwallet.com/wallet/balance/$i"
+  curl -L -X GET http://revwallet.com/wallet/
 done
