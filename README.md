@@ -9,6 +9,7 @@ flowchart LR
   nginx -- Basic Auth --> prometheus
   nginx -- Basic Auth --> grafana
   revwallet_api --> postgresql
+  alloy --> revwallet_api
   prometheus --> revwallet_api
   prometheus --> grafana
 ```
