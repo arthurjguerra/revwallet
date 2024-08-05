@@ -7,12 +7,12 @@ Wallet API where users can deposit, withdraw, and check the balance of a wallet.
 flowchart LR
   nginx -- /wallet --> revwallet_api
   subgraph Private Access
-    revwallet_api-->postgresql
-    revwallet_api-->prometheus
-    revwallet_api-->alloy
-    prometheus-->grafana
-    alloy-->loki
-    loki-->grafana
+    revwallet_api --> postgresql
+    revwallet_api --> prometheus:9090
+    revwallet_api --> alloy
+    prometheus --> grafana
+    alloy --> loki
+    loki --> grafana
   end
 ```
 
