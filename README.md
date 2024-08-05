@@ -57,7 +57,7 @@ RevWallet is a [Flask](https://flask.palletsprojects.com/en/3.0.x/) application 
 - [Python 3.11](https://www.python.org/downloads/)
 - [Pipenv](https://pipenv.pypa.io/en/latest/)
 
-If youuse `brew`, you can install the necessary dependencies by running:
+If you use `brew`, you can install the necessary dependencies by running:
 ```
 brew install docker
 brew install docker-compose
