@@ -1,7 +1,8 @@
 # revwallet
 Wallet API where users can deposit, withdraw, and check the balance of a wallet. The objective to practice infrastructure as code, CI/CD, immutable infrastructure, and software development (Python).
 
-## Architecture
+## Architecture Overview
+The RevWallet API is hosted behind an Nginx reverse proxy. In addition to the API, other key services such as Grafana and Prometheus are also routed through Nginx, ensuring a unified access point for external interactions.
 
 ```mermaid
 graph TD
@@ -40,8 +41,13 @@ graph TD
   class revwallet_db private
   class revwallet_api public
   class nginx public
-
 ```
+  
+Only the services routed through Nginx (RevWallet API, Grafana, and Prometheus) are exposed to external networks. Except for the API, all the other routes through Nginx require basic authentication (`admin:admin` :D). 
+
+Other critical services (e.g., Loki, Alloy, RevWallet DB) are not exposed externally. Their ports are not bound to the local host, maintaining internal-only communication. Services within the architecture communicate exclusively over the application's internal network.
+
+This setup ensures that internal services remain inaccessible from outside the network, which adds an extra layer of security to the system.
 
 ## How to run it locally?
 
