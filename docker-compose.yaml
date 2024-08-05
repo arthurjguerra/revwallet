@@ -24,6 +24,7 @@ services:
     volumes:
       - ./config/alloy/config.alloy:/etc/alloy/config.alloy
       - ./logs/revwallet:/var/log/revwallet
+      - ./logs/nginx:/var/log/nginx
     # ports:
     #   - "12345:12345"
     command: [
@@ -138,6 +139,7 @@ services:
       - ./config/nginx/.htpasswd:/etc/nginx/.htpasswd
       - ./config/nginx/index.html:/usr/share/nginx/www/index.html
       - ./config/nginx/404.html:/usr/share/nginx/www/404.html
+      - ./logs/nginx:/var/log/nginx
     ports:
       - "80:80"
     networks:
