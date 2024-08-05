@@ -15,12 +15,12 @@ flowchart LR
   nginx -- /wallet --> revwallet_api
   subgraph Reverse Proxy Exposed No Auth
     revwallet_api --> alloy
-    revwallet_api --> prometheus
     revwallet_api --> postgresql
   end
   subgraph Reverse Proxy Exposed Basic Auth
     nginx -- Basic Auth --> grafana
     nginx -- Basic Auth --> prometheus
+    revwallet_api --> prometheus
   end
   subgraph Not Reverse Proxy Exposed
     alloy --> loki
