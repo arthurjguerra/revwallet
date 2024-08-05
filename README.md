@@ -7,14 +7,15 @@ Wallet API where users can deposit, withdraw, and check the balance of a wallet.
 flowchart LR
   nginx -- /wallet --> revwallet_api
   subgraph Reverse Proxy Exposed No Auth
-     nginx -- /wallet --> revwallet_api
+    revwallet_api --> alloy
+    revwallet_api --> prometheus
+    revwallet_api --> postgresql
   end
   subgraph Reverse Proxy Exposed Basic Auth
     nginx -- Basic Auth --> grafana
     nginx -- Basic Auth --> prometheus
   end
   subgraph Not Reverse Proxy Exposed
-    revwallet_api --> alloy
     prometheus --> postgresql
     alloy --> loki
     loki --> grafana
