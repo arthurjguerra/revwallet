@@ -127,21 +127,21 @@ docker compose down -v
 ```
 
 ## Running Tests
-RevWallet has both unit and end-to-end tests. Follow these steps to run the tests:
+RevWallet has both unit and end-to-end tests. Follow these steps to run them all:
 
 1. Activate the virtual environment:
 ```
 pipenv shell
 ```
-2. Sync dependencies:
+1. Sync dependencies:
 ```
 pipenv sync --dev
 ```
-3. Build and start the containers:
+1. Build and start the containers:
 ```
 docker compose up --build -d
 ```
-4. Run the tests:
+1. Run the tests:
 ```
 pipenv run pytest
 ```
