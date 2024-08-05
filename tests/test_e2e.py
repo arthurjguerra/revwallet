@@ -7,7 +7,7 @@ import requests
 class TestWalletE2E(unittest.TestCase):
 
   def setUp(self):
-    self.base_url = "http://127.0.0.1:5000"
+    self.base_url = "http://revwallet.com"
     self.balance = 900.00
     self.currency = "EUR"
     self.owner = "test"
