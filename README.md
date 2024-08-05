@@ -1,18 +1,47 @@
 # revwallet
-Wallet API where users can deposit, withdraw, and check the balance of a wallet. The objective to practice infrastructure as code, CI/CD, immutable infrastructure, and software development (Python). 
+Wallet API where users can deposit, withdraw, and check the balance of a wallet. The objective to practice infrastructure as code, CI/CD, immutable infrastructure, and software development (Python).
 
-## TODO
-- [X] Implement unit tests to validate three operations in a wallet: check current wallet balance, deposit money to a wallet and withdraw money from a wallet.
-- [X] Implement the wallet API that accepts the three operations above (without persisting anything).
-- [X] Add unit tests to CICD.
-- [X] Create a simple web app in Flask that can interact with the wallet API to show the current balance in the wallet, add money to it, and withdraw money from the wallet.
-- [X] Create a database that will be used to persist all three operations supported by the wallet API.
-- [X] Have the DB + the app running locally using Docker.
-- [X] Implement integration tests to check if all operations work from end to end.
-- [X] Build and publish docker images from GHA
-- [X] Implement dashboard for monitoring
-- [X] Implement log aggregation
-- [ ] Implement code to spin up the minimal infrastructure required to run this in AWS: networking, DB, container orchestrator.
+## Architecture
+
+```mermaid
+graph TD
+  subgraph RevWallet Architecture
+      loki[Loki]
+      alloy[Alloy]
+      grafana[Grafana]
+      prometheus[Prometheus]
+      revwallet_db[RevWallet DB]
+      revwallet_api[RevWallet API]
+      nginx[Nginx]
+  end
+
+  loki -.-> grafana
+  alloy -.-> loki
+  alloy -.-> revwallet_api
+  prometheus -.-> grafana
+  prometheus -.-> revwallet_api
+  revwallet_api -.-> revwallet_db
+  nginx -- no auth --> revwallet_api
+  nginx -- basic auth --> prometheus
+  nginx -- basic auth --> grafana
+  id1 -- /prometheus --> nginx
+  id1 -- /grafana --> nginx
+  id1[[revwallet.com]] -- /wallet --> nginx
+
+  classDef public fill:#c2e59c,stroke:#000,stroke-width:2px;
+  classDef private fill:#f3e59c,stroke:#000,stroke-width:2px;
+  linkStyle 7,8,9,10 stroke-width:3px,stroke:red
+  linkStyle 6,11 stroke-width:3px,stroke:green
+
+  class loki private
+  class alloy private
+  class grafana public
+  class prometheus public
+  class revwallet_db private
+  class revwallet_api public
+  class nginx public
+
+```
 
 ## How to run it locally?
 
@@ -62,3 +91,16 @@ bash scripts/generate-data
 ```
 
 This script will create some wallets, check the balance and fetch all wallets from the API.
+
+## TODO
+- [X] Implement unit tests to validate three operations in a wallet: check current wallet balance, deposit money to a wallet and withdraw money from a wallet.
+- [X] Implement the wallet API that accepts the three operations above (without persisting anything).
+- [X] Add unit tests to CICD.
+- [X] Create a simple web app in Flask that can interact with the wallet API to show the current balance in the wallet, add money to it, and withdraw money from the wallet.
+- [X] Create a database that will be used to persist all three operations supported by the wallet API.
+- [X] Have the DB + the app running locally using Docker.
+- [X] Implement integration tests to check if all operations work from end to end.
+- [X] Build and publish docker images from GHA
+- [X] Implement dashboard for monitoring
+- [X] Implement log aggregation
+- [ ] Implement code to spin up the minimal infrastructure required to run this in AWS: networking, DB, container orchestrator.
