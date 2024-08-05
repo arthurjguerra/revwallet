@@ -66,7 +66,7 @@ brew install python@3.11
 brew install pipenv
 ```
 
-Lastly, to ensure that revwallet.com resolves correctly on your local machine, add the following entry to your /etc/hosts file:
+Lastly, to ensure that revwallet.com resolves correctly on your local machine, add the following entry to your `/etc/hosts` file:
 ```
 127.0.0.1 revwallet.com
 ```
