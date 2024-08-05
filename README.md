@@ -6,12 +6,6 @@ Wallet API where users can deposit, withdraw, and check the balance of a wallet.
 ```mermaid
 flowchart LR
   nginx -- /wallet --> revwallet_api & nginx -- Basic Auth --> prometheus & nginx -- Basic Auth --> grafana
-  revwallet_api --> postgresql
-  prometheus --> revwallet_api
-  prometheus --> grafana
-  loki --> grafana
-  alloy --> revwallet_api
-  alloy --> loki
 ```
 
 ## How to run it locally?
