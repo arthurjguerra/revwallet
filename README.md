@@ -5,9 +5,9 @@ Wallet API where users can deposit, withdraw, and check the balance of a wallet.
 
 ```mermaid
 flowchart LR
-    c1-->a2
+    nginx --> revwallet_api
     subgraph ide1 [one]
-    a1-->a2
+    a1 --> revwallet_api
     end
 ```
 ```mermaid
