@@ -133,15 +133,15 @@ RevWallet has both unit and end-to-end tests. Follow these steps to run them all
 ```
 pipenv shell
 ```
-1. Sync dependencies:
+2. Sync dependencies:
 ```
 pipenv sync --dev
 ```
-1. Build and start the containers:
+3. Build and start the containers:
 ```
 docker compose up --build -d
 ```
-1. Run the tests:
+4. Run the tests:
 ```
 pipenv run pytest
 ```
