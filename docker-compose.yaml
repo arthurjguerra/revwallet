@@ -69,6 +69,8 @@ services:
       - ./config/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yaml
     command:
       - '--config.file=/etc/prometheus/prometheus.yaml'
+      - '--web.external-url=/prometheus/'
+      - '--web.route-prefix=/prometheus/'
     ports:
       - "9090:9090"
     networks:
