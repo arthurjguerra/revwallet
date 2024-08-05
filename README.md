@@ -49,59 +49,114 @@ Other critical services (e.g., Loki, Alloy, RevWallet DB) are not exposed extern
 
 This setup ensures that internal services remain inaccessible from outside the network, which adds an extra layer of security to the system.
 
-## How to run it locally?
-Add this to your `/etc/hosts` file:
+## Requirements
+RevWallet is a [Flask](https://flask.palletsprojects.com/en/3.0.x/) application that runs on Docker. To get started, ensure you have the following dependencies installed on your system:
+- [Docker](https://docs.docker.com/guides/getting-started/)
+- [Docker Compose](https://docs.docker.com/compose/gettingstarted/)
+- [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
+- [Python 3.11](https://www.python.org/downloads/)
+- [Pipenv](https://pipenv.pypa.io/en/latest/)
+
+If youuse `brew`, you can install the necessary dependencies by running:
+```
+brew install docker
+brew install docker-compose
+brew install kind
+brew install python@3.11
+brew install pipenv
+```
+
+Lastly, to ensure that revwallet.com resolves correctly on your local machine, add the following entry to your /etc/hosts file:
 ```
 127.0.0.1 revwallet.com
 ```
 
-Then, run docker compose:
+## Running RevWallet with Docker Compose
+
+To run RevWallet using Docker Compose, follow these steps:
+
+1. Start by activating the virtual environment and installing the dependencies:
 ```
 pipenv shell
 pipenv install -e .
+```
+2. Build the Docker images and run the containers:
+```
 docker compose up --build -d  # this will build the images and run the containers
 ```
 
-Docker Compose will bring up all the services. Once the containers are up and running, you can interact with the API:
+Docker Compose will bring up all the services. Once the containers are up and running, you can interact with the API as follows:
+
+- Fetch existing wallets
 ```
-# fetch existing wallets
 curl -X GET http://revwallet.com/wallet/
-# example of response: [] or [{"balance":999.0,"currency":"EUR","id":"1","owner":"test2"}]
-
-# create a new wallet
-curl -X POST http://revwallet.com/wallet/ -d '{"owner": "test2", "initial_balance": "999.00", "currency": "EUR"}' -H "Content-Type: application/json"
-# example of response: {"balance":999.0,"currency":"EUR","id":"1","owner":"test2"}
-
-# check current balance
-curl -X GET http://revwallet.com/wallet/balance/1
-# example of response: {"balance":999.0,"currency":"EUR","id":"1","owner":"test2"}
+```
+Example of response: 
+```
+[] or [{"balance":999.0,"currency":"EUR","id":"1","owner":"test2"}]
 ```
 
-If you want to see the logs of the app, run:
+- Create a new wallet
+```
+curl -X POST http://revwallet.com/wallet/ -d '{"owner": "test2", "initial_balance": "999.00", "currency": "EUR"}' -H "Content-Type: application/json"
+```
+Example of response: 
+```
+{"balance":999.0,"currency":"EUR","id":"1","owner":"test2"}
+```
+
+- Check current balance
+```
+curl -X GET http://revwallet.com/wallet/balance/1
+```
+Example of response: 
+```
+{"balance":999.0,"currency":"EUR","id":"1","owner":"test2"}
+```
+
+### Checking the logs
+To see the logs of the app, run:
 ```
 docker compose logs revwallet_api --follow
 ```
 
+### Shutting Down
 To shut everything down, run:
 ```
 docker compose down -v
 ```
 
-## How to run the tests?
+## Running Tests
+RevWallet has both unit and end-to-end tests. Follow these steps to run the tests:
+
+1. Activate the virtual environment:
 ```
 pipenv shell
+```
+2. Sync dependencies:
+```
 pipenv sync --dev
+```
+3. Build and start the containers:
+```
 docker compose up --build -d
+```
+4. Run the tests:
+```
 pipenv run pytest
 ```
 
-## How to generate random data?
-If you want to generate random data, you can run:
+## Generating Random Data
+To generate random data for testing purposes, you can use the [generate-data](./scripts/generate-data) script. Run the following command in your terminal to populate the API with sample data:
+
 ```
 bash scripts/generate-data
 ```
 
-This script will create some wallets, check the balance and fetch all wallets from the API.
+This script will:
+- Create some wallets.
+- Check the balance of these wallets.
+- Fetch all wallets from the API.
 
 ## TODO
 - [X] Implement unit tests to validate three operations in a wallet: check current wallet balance, deposit money to a wallet and withdraw money from a wallet.
