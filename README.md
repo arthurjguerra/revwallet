@@ -169,4 +169,5 @@ This script will:
 - [X] Build and publish docker images from GHA
 - [X] Implement dashboard for monitoring
 - [X] Implement log aggregation
+- [ ] Run it locally with K8s
 - [ ] Implement code to spin up the minimal infrastructure required to run this in AWS: networking, DB, container orchestrator.
