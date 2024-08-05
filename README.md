@@ -50,25 +50,30 @@ Other critical services (e.g., Loki, Alloy, RevWallet DB) are not exposed extern
 This setup ensures that internal services remain inaccessible from outside the network, which adds an extra layer of security to the system.
 
 ## How to run it locally?
+Add this to your `/etc/hosts` file:
+```
+127.0.0.1 revwallet.com
+```
 
+Then, run docker compose:
 ```
 pipenv shell
 pipenv install -e .
 docker compose up --build -d  # this will build the images and run the containers
 ```
 
-Docker Compose will bring up a database container (`revwallet_db`) and the API container (`revwallet_api`). Once the pods are up and running, you can interact with the API:
+Docker Compose will bring up all the services. Once the containers are up and running, you can interact with the API:
 ```
 # fetch existing wallets
-curl -X GET http://127.0.0.1:5000/wallet/
+curl -X GET http://revwallet.com/wallet/
 # example of response: [] or [{"balance":999.0,"currency":"EUR","id":"1","owner":"test2"}]
 
 # create a new wallet
-curl -X POST http://127.0.0.1:5000/wallet/ -d '{"owner": "test2", "initial_balance": "999.00", "currency": "EUR"}' -H "Content-Type: application/json"
+curl -X POST http://revwallet.com/wallet/ -d '{"owner": "test2", "initial_balance": "999.00", "currency": "EUR"}' -H "Content-Type: application/json"
 # example of response: {"balance":999.0,"currency":"EUR","id":"1","owner":"test2"}
 
 # check current balance
-curl -X GET http://127.0.0.1:5000/wallet/balance/1
+curl -X GET http://revwallet.com/wallet/balance/1
 # example of response: {"balance":999.0,"currency":"EUR","id":"1","owner":"test2"}
 ```
 
