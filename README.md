@@ -5,8 +5,8 @@ Wallet API where users can deposit, withdraw, and check the balance of a wallet.
 
 ```mermaid
 flowchart LR
-  nginx -- Basic Auth --> grafana
-  nginx -- Basic Auth --> prometheus
+  nginx -- Auth --> grafana
+  nginx -- Auth --> prometheus
   subgraph No Authentication
     nginx -- /wallet --> revwallet_api
   end
