@@ -8,10 +8,10 @@ flowchart LR
   c1-->a2
   subgraph Public Access
     nginx-->revwallet_api
-    revwallet_api-->prometheus
-    revwallet_api-->alloy
   end
   subgraph Private Access
+    revwallet_api-->prometheus
+    revwallet_api-->alloy
     prometheus-->grafana
     alloy-->loki
     loki-->grafana
