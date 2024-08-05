@@ -23,9 +23,9 @@ flowchart LR
     nginx -- Basic Auth --> prometheus
   end
   subgraph Not Reverse Proxy Exposed
-    prometheus --> postgresql
     alloy --> loki
     loki --> grafana
+    prometheus --> grafana
   end
 ```
 
