@@ -9,6 +9,8 @@ flowchart LR
   nginx -- Basic Auth --> prometheus
   nginx -- Basic Auth --> grafana
   revwallet_api --> postgresql
+  prometheus --> revwallet_api
+  prometheus --> grafana
 ```
 
 ## How to run it locally?
