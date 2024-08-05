@@ -4,17 +4,43 @@ Wallet API where users can deposit, withdraw, and check the balance of a wallet.
 ## Architecture
 
 ```mermaid
-flowchart LR
-  nginx --> A{Wallet API endpoint?}
-  A -- /wallet --> revwallet_api
-  nginx -- Basic Auth --> prometheus
-  nginx -- Basic Auth --> grafana
-  revwallet_api --> postgresql
-  alloy --> revwallet_api
-  alloy --> loki
-  prometheus --> revwallet_api
-  prometheus --> grafana
-  loki --> grafana
+graph TD
+  subgraph RevWallet Architecture
+      loki[Loki]
+      alloy[Alloy]
+      grafana[Grafana]
+      prometheus[Prometheus]
+      revwallet_db[RevWallet DB]
+      revwallet_api[RevWallet API]
+      nginx[Nginx]
+  end
+
+  loki -.-> grafana
+  alloy -.-> loki
+  alloy -.-> revwallet_api
+  prometheus -.-> grafana
+  prometheus -.-> revwallet_api
+  revwallet_api -.-> revwallet_db
+  nginx -- no auth --> revwallet_api
+  nginx -- basic auth --> prometheus
+  nginx -- basic auth --> grafana
+  id1 -- /prometheus --> nginx
+  id1 -- /grafana --> nginx
+  id1[[revwallet.com]] -- /wallet --> nginx
+
+  classDef public fill:#c2e59c,stroke:#000,stroke-width:2px;
+  classDef private fill:#f3e59c,stroke:#000,stroke-width:2px;
+  linkStyle 7,8,9,10 stroke-width:3px,stroke:red
+  linkStyle 6,11 stroke-width:3px,stroke:green
+
+  class loki private
+  class alloy private
+  class grafana public
+  class prometheus public
+  class revwallet_db private
+  class revwallet_api public
+  class nginx public
+
 ```
 
 ## How to run it locally?
