@@ -11,9 +11,9 @@ flowchart TB
   revwallet_api --> postgresql
   prometheus --> revwallet_api
   prometheus --> grafana
+  loki --> grafana
   alloy --> revwallet_api
   alloy --> loki
-  loki --> grafana
 ```
 
 ## How to run it locally?
