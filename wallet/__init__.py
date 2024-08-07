@@ -4,7 +4,12 @@ import logging
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-logging.basicConfig(filename='/var/log/revwallet/revwallet.log', level=logging.INFO,
+log_directory = '/var/log/revwallet'
+if not os.path.exists(log_directory):
+    os.makedirs(log_directory)
+
+logging.basicConfig(filename=f'{log_directory}/revwallet.log', 
+                    level=logging.INFO,
                     format='%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
 
 logger = logging.getLogger()
