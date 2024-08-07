@@ -2,6 +2,8 @@ FROM python:3.11-slim
 
 WORKDIR /revwallet
 
+RUN mkdir -p /var/log/revwallet && chmod -R 755 /var/log/revwallet
+
 COPY wallet wallet
 COPY app.py .
 COPY Pipfile .
