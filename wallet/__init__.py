@@ -7,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 log_directory = '/var/log/revwallet'
 if not os.path.exists(log_directory):
     os.makedirs(log_directory)
+    os.chmod(log_directory, 0o755)
 
 logging.basicConfig(filename=f'{log_directory}/revwallet.log', 
                     level=logging.INFO,
