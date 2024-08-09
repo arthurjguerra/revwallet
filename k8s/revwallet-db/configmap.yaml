@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: revwallet-db-secret
+  labels:
+    app: revwallet-db
+data:
+  POSTGRES_DB: revwallet
+  POSTGRES_USER: revwallet
+  POSTGRES_PASSWORD: mypassword

@@ -522,7 +522,7 @@
       "targets": [
         {
           "$$hashKey": "object:638",
-          "expr": "process_resident_memory_bytes{job=\"revwallet_api\"}",
+          "expr": "process_resident_memory_bytes{job=\"revwallet-api\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "mem",
@@ -793,7 +793,7 @@
       "targets": [
         {
           "$$hashKey": "object:638",
-          "expr": "rate(process_cpu_seconds_total{job=\"revwallet_api\"}[30s])",
+          "expr": "rate(process_cpu_seconds_total{job=\"revwallet-api\"}[30s])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "cpu",

@@ -1,0 +1,36 @@
+image:
+  registry: docker.io
+  repository: bitnami/nginx
+  tag: 1.27.0-debian-12-r5
+  pullPolicy: Always
+
+service:
+  type: NodePort
+  port: 8080
+
+replicaCount: 1
+
+ingress:
+  enabled: true
+  hostname: revwallet.com
+  hosts:
+    - host: revwallet.com
+      paths: []
+    - host: 127.0.0.1
+      paths: [] 
+  tls: false
+
+extraVolumes:
+  - name: nginx-html
+    configMap:
+      name: nginx-html
+  - name: nginx-config
+    configMap:
+      name: nginx-config
+
+extraVolumeMounts:
+  - name: nginx-html
+    mountPath: /opt/bitnami/nginx/html/
+  - name: nginx-config
+    mountPath: /opt/bitnami/nginx/conf/nginx.conf
+    subPath: nginx.conf

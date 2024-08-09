@@ -11,18 +11,18 @@ graph TD
       alloy[Alloy]
       grafana[Grafana]
       prometheus[Prometheus]
-      revwallet_db[RevWallet DB]
-      revwallet_api[RevWallet API]
+      revwallet-db[RevWallet DB]
+      revwallet-api[RevWallet API]
       nginx[Nginx]
   end
 
   loki -.-> grafana
   alloy -.-> loki
-  alloy -.-> revwallet_api
+  alloy -.-> revwallet-api
   prometheus -.-> grafana
-  prometheus -.-> revwallet_api
-  revwallet_api -.-> revwallet_db
-  nginx -- no auth --> revwallet_api
+  prometheus -.-> revwallet-api
+  revwallet-api -.-> revwallet-db
+  nginx -- no auth --> revwallet-api
   nginx -- basic auth --> prometheus
   nginx -- basic auth --> grafana
   id1 -- /prometheus --> nginx
@@ -38,8 +38,8 @@ graph TD
   class alloy private
   class grafana public
   class prometheus public
-  class revwallet_db private
-  class revwallet_api public
+  class revwallet-db private
+  class revwallet-api public
   class nginx public
 ```
   
@@ -54,6 +54,8 @@ RevWallet is a [Flask](https://flask.palletsprojects.com/en/3.0.x/) application 
 - [Docker](https://docs.docker.com/guides/getting-started/)
 - [Docker Compose](https://docs.docker.com/compose/gettingstarted/)
 - [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
+- [Kubectl](https://kubernetes.io/docs/reference/kubectl/)
+- [Helm](https://helm.sh/docs/intro/quickstart/)
 - [Python 3.11](https://www.python.org/downloads/)
 - [Pipenv](https://pipenv.pypa.io/en/latest/)
 
@@ -62,6 +64,7 @@ If you use `brew`, you can install the necessary dependencies by running:
 brew install docker
 brew install docker-compose
 brew install kind
+brew install helm
 brew install python@3.11
 brew install pipenv
 ```
@@ -72,8 +75,7 @@ Lastly, to ensure that revwallet.com resolves correctly on your local machine, a
 ```
 
 ## Running RevWallet with Docker Compose
-
-To run RevWallet using Docker Compose, follow these steps:
+To run RevWallet locally using Docker Compose, follow these steps:
 
 1. Start by activating the virtual environment and installing the dependencies:
 ```
@@ -117,7 +119,7 @@ Example of response:
 ### Checking the logs
 To see the logs of the app, run:
 ```
-docker compose logs revwallet_api --follow
+docker compose logs revwallet-api
 ```
 
 ### Shutting Down
@@ -126,7 +128,7 @@ To shut everything down, run:
 docker compose down -v
 ```
 
-## Running Tests
+### Running Tests
 RevWallet has both unit and end-to-end tests. Follow these steps to run them all:
 
 1. Activate the virtual environment:
@@ -144,6 +146,88 @@ docker compose up --build -d
 4. Run the tests:
 ```
 pipenv run pytest
+```
+
+## Running RevWallet on Kubernetes with `kind` and `helm`
+To run RevWallet on Kubernetes (locally), follow these steps:
+
+1. Create a local Kubernetes clusters with `kind`:
+```
+kind create cluster --name revwallet
+kind get clusters
+```
+2. Create a new namespace:
+```
+kubectl create namespace revwallet-dev
+kubectl config set-context --current --namespace=revwallet-dev
+kubectl get pods
+```
+3. Deploy the database:
+```
+kubectl apply -f k8s/revwallet-db
+```
+If you want to make sure the DB is deployed correctly, you can run the following commands to check if resources were created properly:
+```
+kubectl get pv
+kubectl get pvc
+kubectl get deployments
+kubectl get pods
+kubectl get svc
+```
+You can also connect to the DB:
+```
+kubectl exec -it <POD> -- psql -h localhost -U revwallet --password -p 5432 revwallet
+```
+And verify the connection to the DB:
+```
+\conninfo
+```
+Expected response:
+```
+Password:
+psql (16.4 (Debian 16.4-1.pgdg120+1))
+Type "help" for help.
+
+revwallet=# \connect
+Password:
+You are now connected to database "revwallet" as user "revwallet".
+revwallet=#
+```
+4. Deploy the API:
+```
+helm -n revwallet-dev upgrade --install --values k8s/revwallet-api-chart/values.yaml revwallet-api k8s/revwallet-api-chart
+```
+5. Deploy Nginx:
+```
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo update
+kubectl -n revwallet-dev create configmap nginx-html --from-file=config/nginx/revwallet.html --from-file=config/nginx/404.html 
+kubectl -n revwallet-dev create configmap nginx-config --from-file=config/nginx/nginx.conf
+helm -n revwallet-dev upgrade --install --values k8s/nginx/values.yaml revwallet-proxy bitnami/nginx
+```
+To access the app, first, run:
+```
+kubectl -n revwallet-dev port-forward pod/<NGINX_POD> 8080:8080
+```
+Then, access the app at http://localhost:8080
+
+### Running Tests
+TBD.
+
+### Shutting Down
+To shut all the pods down in Kubernetes, run:
+```
+kubectl -n revwallet-dev delete configmap nginx-html
+kubectl -n revwallet-dev delete configmap nginx-conf
+helm -n revwallet-dev uninstall nginx
+helm -n revwallet-dev uninstall revwallet-api
+helm -n revwallet-dev uninstall revwallet-db
+helm -n revwallet-dev uninstall revwallet-obs
+```
+
+To delete the cluster, run:
+```
+kind delete cluster --name revwallet
 ```
 
 ## Generating Random Data

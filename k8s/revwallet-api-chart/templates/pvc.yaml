@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.persistentVolumeClaim.name }}
+  labels:
+    {{- include "revwallet-api-chart.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ .Values.persistentVolumeClaim.accessModes | default "ReadWriteOnce" }}
+  resources:
+    requests:
+      storage: {{ .Values.persistentVolumeClaim.size | default "1Gi" }}
+  {{- if .Values.persistentVolumeClaim.storageClass }}
+  storageClassName: {{ .Values.persistentVolumeClaim.storageClass }}
+  {{- end }}
