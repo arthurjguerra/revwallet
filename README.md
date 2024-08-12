@@ -89,7 +89,7 @@ Docker Compose will bring up all the services. Once the containers are up and ru
 
 - Fetch existing wallets
 ```
-curl -X GET http://revwallet.com/wallet/
+curl -L -X GET http://revwallet.com/wallet/
 ```
 Example of response: 
 ```
@@ -98,7 +98,7 @@ Example of response:
 
 - Create a new wallet
 ```
-curl -X POST http://revwallet.com/wallet/ -d '{"owner": "test2", "initial_balance": "999.00", "currency": "EUR"}' -H "Content-Type: application/json"
+curl -L -X POST http://revwallet.com/wallet/ -d '{"owner": "test2", "initial_balance": "999.00", "currency": "EUR"}' -H "Content-Type: application/json"
 ```
 Example of response: 
 ```
@@ -107,7 +107,7 @@ Example of response:
 
 - Check current balance
 ```
-curl -X GET http://revwallet.com/wallet/balance/1
+curl -L -X GET http://revwallet.com/wallet/balance/1
 ```
 Example of response: 
 ```
