@@ -137,7 +137,7 @@ services:
     volumes:
       - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./config/nginx/.htpasswd:/etc/nginx/.htpasswd
-      - ./config/nginx/index.html:/usr/share/nginx/www/index.html
+      - ./config/nginx/revwallet.html:/usr/share/nginx/www/revwallet.html
       - ./config/nginx/404.html:/usr/share/nginx/www/404.html
       - ./logs/nginx:/var/log/nginx
     ports:
