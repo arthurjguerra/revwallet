@@ -1,0 +1,7 @@
+apiVersion: v2
+name: revwallet-api-chart
+description: RevWallet Helm Chart
+
+type: application
+version: 0.0.1
+appVersion: "latest"

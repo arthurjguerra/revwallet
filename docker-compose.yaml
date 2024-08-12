@@ -83,11 +83,11 @@ services:
       retries: 10
       start_period: 40s
 
-  revwallet_db:
+  revwallet-db:
     image: postgres:latest
-    container_name: revwallet_db
+    container_name: revwallet-db
     environment:
-      POSTGRES_USER: myuser
+      POSTGRES_USER: revwallet
       POSTGRES_PASSWORD: mypassword
       POSTGRES_DB: revwallet
     # ports:
@@ -97,19 +97,19 @@ services:
     networks:
       - revwallet_network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d revwallet -U myuser"]
+      test: ["CMD-SHELL", "pg_isready -d revwallet -U revwallet"]
       interval: 10s
       timeout: 5s
       retries: 5
 
-  revwallet_api:
+  revwallet-api:
     image: arthurjguerra18/revwallet:${GITHUB_SHA:-test}
-    container_name: revwallet_api
+    container_name: revwallet-api
     build:
       context: .
       dockerfile: Dockerfile
     depends_on:
-      revwallet_db:
+      revwallet-db:
         condition: service_healthy
       prometheus:
         condition: service_healthy
@@ -118,16 +118,16 @@ services:
       alloy:
         condition: service_started
     environment:
-      DB_USERNAME: myuser
+      DB_USERNAME: revwallet
       DB_PASSWORD: mypassword
       DB_NAME: revwallet
-      DB_HOST: revwallet_db
+      DB_HOST: revwallet-db
     # ports:
     #   - "5000:5000"
     networks:
       - revwallet_network
     links:
-      - revwallet_db
+      - revwallet-db
     volumes:
       - ./logs/revwallet:/var/log/revwallet
 
@@ -145,7 +145,7 @@ services:
     networks:
       - revwallet_network
     depends_on:
-      revwallet_api:
+      revwallet-api:
         condition: service_started
       prometheus:
         condition: service_healthy

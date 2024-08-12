@@ -3,9 +3,9 @@ global:
   evaluation_interval:  15s
 
 scrape_configs:
-  - job_name: 'revwallet_api'
+  - job_name: 'revwallet-api'
     static_configs:
-      - targets: ['revwallet_api:5000']
+      - targets: ['revwallet-api:5000']
 
 remote_write:
 - url: http://localhost:9090/prometheus/api/prom/push

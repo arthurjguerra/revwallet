@@ -1,0 +1,78 @@
+replicaCount: 1
+
+image:
+  repository: arthurjguerra18/revwallet
+  pullPolicy: Always
+  tag: "v0.3.0"
+
+imagePullSecrets: []
+nameOverride: "revwallet-api"
+fullnameOverride: "revwallet-api"
+
+env:
+  DB_USERNAME: revwallet
+  DB_PASSWORD: mypassword
+  DB_NAME: revwallet
+  DB_HOST: revwallet-db.revwallet-dev.svc.cluster.local
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: "revwallet-api-sa"
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: NodePort
+  port: 5000
+
+ingress:
+  enabled: false
+
+resources:
+  limits:
+    cpu: 100m
+  requests:
+    cpu: 100m
+
+livenessProbe:
+  httpGet:
+    path: /wallet/
+    port: http
+readinessProbe:
+  httpGet:
+    path: /wallet/
+    port: http
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 80
+
+persistentVolumeClaim:
+  name: revwallet-api-log-volume-claim
+  accessModes: ReadWriteOnce
+  size: 1Gi
+  storageClass: ""  # set to default
+
+volumes: 
+  - name: revwallet-api-log-volume
+    persistentVolumeClaim:
+      claimName: revwallet-api-log-volume-claim
+
+volumeMounts:
+  - name: revwallet-api-log-volume
+    mountPath: /var/log/revwallet
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
