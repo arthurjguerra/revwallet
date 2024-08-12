@@ -141,7 +141,7 @@ services:
       - ./config/nginx/404.html:/usr/share/nginx/www/404.html
       - ./logs/nginx:/var/log/nginx
     ports:
-      - "80:80"
+      - "8080:8080"
     networks:
       - revwallet_network
     depends_on:
