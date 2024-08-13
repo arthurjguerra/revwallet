@@ -1,5 +1,7 @@
-# revwallet
-Wallet API where users can deposit, withdraw, and check the balance of a wallet. The objective to practice infrastructure as code, CI/CD, immutable infrastructure, and software development (Python).
+# RevWallet
+Wallet API where users can deposit, withdraw, and check the balance of a wallet. 
+
+*The objective to practice infrastructure as code, CI/CD, immutable infrastructure, and software development (Python).*
 
 ## Architecture Overview
 The RevWallet API is hosted behind an Nginx reverse proxy. In addition to the API, other key services such as Grafana and Prometheus are also routed through Nginx, ensuring a unified access point for external interactions.
@@ -76,12 +78,12 @@ make compose-up
 ```
 Then, access the API at http://localhost:8080
 
-For more details about RevWallet on Docker Compose, refer to the [Docker Compose documentation](docs/docker-compose.md).
-
 To shut everything down:
 ```
 make compose-down
 ```
+
+For more details about RevWallet on Docker Compose, refer to the [Docker Compose documentation](docs/docker-compose.md).
 
 ## Running RevWallet on Kubernetes (locally)
 To deploy RevWallet on Kubernetes (locally), run:
@@ -91,15 +93,20 @@ make setup   # creates the cluster and namespace
 make deploy  # deploys all resources
 ```
 
-Then, access the API at http://localhost:8080
+Make sure the API is accessible locally:
+```
+kubectl -n revwallet-dev port-forward pod/<NGINX_POD> 8080:8080
+```
 
-For more details about RevWallet on Docker Compose, refer to the [Kubernetes documentation](docs/k8s-kind.md).
+Then, access the API at http://localhost:8080
 
 To shut everything down, run:
 ```
 make delete    # deletes resources from K8s cluster
 make shutdown  # deletes the k8s cluster
 ```
+
+For more details about RevWallet on Docker Compose, refer to the [Kubernetes documentation](docs/k8s-kind.md).
 
 ## Generating Random Data
 To generate random data for testing purposes, you can use the [generate-data](./scripts/generate-data) script. Run the following command in your terminal to populate the API with sample data:
