@@ -64,7 +64,7 @@ To see the logs of the app, run:
 docker compose logs revwallet-api
 ```
 
-### Shutting Down
+## Shutting Down
 To shut everything down, run:
 ```
 docker compose down -v
