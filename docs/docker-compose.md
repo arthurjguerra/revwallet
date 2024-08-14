@@ -77,15 +77,6 @@ pipenv shell
 pipenv sync --dev
 ```
 
-If the API is running with Docker Compose, simply run:
-```
-pipenv run pytest
-```
-
-If the API is deployed in Kubernetes locally, make sure the API is accessible from `localhost`:
-```
-kubectl -n revwallet-dev port-forward <NGINX_POD> 8080:8080
-```
 
 Then, run the tests:
 ```
