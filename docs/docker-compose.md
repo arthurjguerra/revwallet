@@ -58,7 +58,7 @@ Example of response:
 {"balance":999.0,"currency":"EUR","id":"1","owner":"test2"}
 ```
 
-### Checking the logs
+## Checking the logs
 To see the logs of the app, run:
 ```
 docker compose logs revwallet-api
