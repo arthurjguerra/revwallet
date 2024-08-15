@@ -15,7 +15,6 @@ RevWallet is a [Flask](https://flask.palletsprojects.com/en/3.0.x/) application 
 If you use `brew`, you can install the necessary dependencies by running:
 ```
 brew install docker
-brew install docker-compose
 brew install kind
 brew install helm
 brew install python@3.11
@@ -139,12 +138,7 @@ pipenv shell
 pipenv sync --dev
 ```
 
-If the API is running with Docker Compose, simply run:
-```
-pipenv run pytest
-```
-
-If the API is deployed in Kubernetes locally, make sure the API is accessible from `localhost`:
+Now, make sure the API is accessible from `localhost`:
 ```
 kubectl -n revwallet-dev port-forward <NGINX_POD> 8080:8080
 ```

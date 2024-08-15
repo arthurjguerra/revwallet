@@ -8,4 +8,4 @@ scrape_configs:
       - targets: ['revwallet-api:5000']
 
 remote_write:
-- url: http://localhost:9090/prometheus/api/prom/push
+- url: http://prometheus:9090/prometheus/api/prom/push

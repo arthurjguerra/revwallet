@@ -72,22 +72,34 @@ brew install pipenv
 ## Running RevWallet with Docker Compose
 To run RevWallet locally using Docker Compose, run:
 ```
-make docker-compose
+make compose-up
 ```
 Then, access the API at http://localhost:8080
 
 For more details about RevWallet on Docker Compose, refer to the [Docker Compose documentation](docs/docker-compose.md).
 
+To shut everything down:
+```
+make compose-down
+```
+
 ## Running RevWallet on Kubernetes (locally)
 To deploy RevWallet on Kubernetes (locally), run:
 
 ```
-make k8s-local
+make setup   # creates the cluster and namespace
+make deploy  # deploys all resources
 ```
 
 Then, access the API at http://localhost:8080
 
 For more details about RevWallet on Docker Compose, refer to the [Kubernetes documentation](docs/k8s-kind.md).
+
+To shut everything down, run:
+```
+make delete    # deletes resources from K8s cluster
+make shutdown  # deletes the k8s cluster
+```
 
 ## Generating Random Data
 To generate random data for testing purposes, you can use the [generate-data](./scripts/generate-data) script. Run the following command in your terminal to populate the API with sample data:
@@ -116,7 +128,7 @@ This script will:
 - [ ] Implement code to spin up the minimal infrastructure required to run this in AWS: networking, DB, container orchestrator.
 - [ ] Make CI tests faster (don't start all the pods -- no need for Grafana, AN)
 - [ ] ArgoCD
-- [ ] Makefile
+- [X] Makefile
 - [ ] Screenshots dashboards
 - [ ] List metrics exposed by RevWallet API
 - [ ] Code coverage badges in README
