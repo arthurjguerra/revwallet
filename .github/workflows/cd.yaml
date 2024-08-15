@@ -24,20 +24,19 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
+      - name: Install pipenv
         run: |
           pip install pipenv
-          pipenv sync --dev
 
       - name: Start containers
-        run: docker compose up -d --build
+        run: make compose-up
 
       - name: Run tests
-        run: pipenv run pytest
+        run: make tests
       
       - name: Stop containers and remove volumes
         if: always()
-        run: docker compose down -v
+        run: make compose-down
 
   build:
     needs: tests
