@@ -101,7 +101,7 @@ delete:
 	$(MAKE) delete-grafana
 
 delete-nginx:
-	helm -n revwallet-dev uninstall nginx
+	helm -n revwallet-dev uninstall bitnami
 	kubectl -n revwallet-dev delete configmap nginx-conf
 	kubectl -n revwallet-dev delete configmap nginx-html
 	kubectl -n revwallet-dev delete configmap nginx-htpasswd
