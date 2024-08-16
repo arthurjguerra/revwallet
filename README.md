@@ -51,6 +51,10 @@ Other critical services (e.g., Loki, Alloy, RevWallet DB) are not exposed extern
 
 This setup ensures that internal services remain inaccessible from outside the network, which adds an extra layer of security to the system.
 
+## Dashboard
+RevWallet is shipped with a default dashboard that can be accessed in Grafana:
+![revwallet-dashboard](./img/revwallet-dashboard.png)
+
 ## Requirements
 RevWallet is a [Flask](https://flask.palletsprojects.com/en/3.0.x/) application that runs on Docker. To get started, ensure you have the following dependencies installed on your system:
 - [Docker](https://docs.docker.com/guides/getting-started/)
@@ -131,12 +135,13 @@ This script will:
 - [X] Build and publish docker images from GHA
 - [X] Implement dashboard for monitoring
 - [X] Implement log aggregation
-- [ ] Run it locally with K8s
+- [X] Run it locally with K8s
 - [ ] Implement code to spin up the minimal infrastructure required to run this in AWS: networking, DB, container orchestrator.
 - [ ] Make CI tests faster (don't start all the pods -- no need for Grafana, AN)
 - [ ] ArgoCD
 - [X] Makefile
-- [ ] Screenshots dashboards
+- [X] Screenshots of dashboard
 - [ ] List metrics exposed by RevWallet API
 - [ ] Code coverage badges in README
 - [ ] Publish RevWallet API chart in ArtifactHub
+- [ ] Add k8s to CICD

@@ -5,6 +5,7 @@ on:
     paths-ignore:
       - 'README.md'
       - 'docs/**'
+      - 'img/**'
 
 jobs:
   tests:
