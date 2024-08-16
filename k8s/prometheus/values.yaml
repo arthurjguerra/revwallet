@@ -4,6 +4,18 @@ alertmanager:
 prometheus-pushgateway:
   enabled: false
 
+kubeStateMetrics:
+  enabled: false
+
+## The URL prefix at which the container can be accessed. Useful in the case the '-web.external-url' includes a slug
+## so that the various internal URLs are still able to access as they are in the default case.
+## (Optional)
+prefixURL: ""
+
+## External URL which can access prometheus
+## Maybe same with Ingress host name
+baseURL: ""
+
 serverFiles:
   prometheus.yml:
     scrape_configs:

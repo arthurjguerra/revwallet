@@ -1,13 +1,13 @@
 # Makefile to build and deploy RevWallet in K8s and Docker Compose
 
 .PHONY: \
-	deploy-nginx \
-	deploy-api \
-	deploy-db \
-	deploy-prometheus \
-	deploy-alloy \
-	deploy-loki \
-	deploy-grafana \
+	nginx \
+	api \
+	db \
+	prometheus \
+	alloy \
+	loki \
+	grafana \
 	deploy \
 	delete-nginx \
 	delete-api \
@@ -54,41 +54,59 @@ setup-helm:
 	helm repo update
 
 shutdown:
+	$(MAKE) delete
+	helm repo remove bitnami grafana prometheus-community
 	kind delete cluster --name revwallet
 
 deploy: 
-	$(MAKE) deploy-db
-	$(MAKE) deploy-alloy
-	$(MAKE) deploy-loki
-	$(MAKE) deploy-prometheus
-	$(MAKE) deploy-grafana
-	$(MAKE) deploy-api
-	$(MAKE) deploy-nginx
+	$(MAKE) db
+	$(MAKE) alloy
+	$(MAKE) loki
+	$(MAKE) prometheus
+	$(MAKE) grafana
+	$(MAKE) api
+	$(MAKE) nginx
 
-deploy-db:
+db:
 	kubectl apply -f k8s/revwallet-db
 
-deploy-alloy:
+alloy:
+	kubectl -n revwallet-dev delete configmap alloy-config >/dev/null 2>&1 || true
 	kubectl -n revwallet-dev create configmap alloy-config --from-file=config/alloy/config.alloy
+
+	helm repo update
 	helm -n revwallet-dev upgrade --install --values k8s/alloy/values.yaml alloy grafana/alloy
 
-deploy-loki:
+loki:
+	helm repo update
 	helm -n revwallet-dev upgrade --install --values k8s/loki/values.yaml loki grafana/loki-stack
 
-deploy-prometheus:
+prometheus:
+	helm repo update
 	helm -n revwallet-dev upgrade --install --values k8s/prometheus/values.yaml prometheus prometheus-community/prometheus
 
-deploy-grafana:
+grafana:
+	kubectl -n revwallet-dev delete configmap revwallet-dashboard >/dev/null 2>&1 || true
 	kubectl -n revwallet-dev create configmap revwallet-dashboard --from-file=config/grafana/dashboard.json
+
+	helm repo update
 	helm -n revwallet-dev upgrade --install --values k8s/grafana/values.yaml grafana grafana/grafana
 
-deploy-api:
+api:
+	helm repo update
 	helm -n revwallet-dev upgrade --install --values k8s/revwallet-api-chart/values.yaml revwallet-api k8s/revwallet-api-chart
 
-deploy-nginx:
+nginx:
+	kubectl -n revwallet-dev delete configmap nginx-html >/dev/null 2>&1 || true
 	kubectl -n revwallet-dev create configmap nginx-html --from-file=config/nginx/revwallet.html --from-file=config/nginx/404.html 
+
+	kubectl -n revwallet-dev delete configmap nginx-conf >/dev/null 2>&1 || true
 	kubectl -n revwallet-dev create configmap nginx-conf --from-file=config/nginx/nginx.conf
+
+	kubectl -n revwallet-dev delete configmap nginx-htpasswd >/dev/null 2>&1 || true
 	kubectl -n revwallet-dev create configmap nginx-htpasswd --from-file=config/nginx/.htpasswd
+
+	helm repo update
 	helm -n revwallet-dev upgrade --install --values k8s/nginx/values.yaml nginx bitnami/nginx
 
 delete:
@@ -101,20 +119,21 @@ delete:
 	$(MAKE) delete-grafana
 
 delete-nginx:
-	helm -n revwallet-dev uninstall bitnami
 	kubectl -n revwallet-dev delete configmap nginx-conf
 	kubectl -n revwallet-dev delete configmap nginx-html
 	kubectl -n revwallet-dev delete configmap nginx-htpasswd
+	helm -n revwallet-dev uninstall nginx
 
 delete-alloy:
 	helm -n revwallet-dev uninstall alloy
+	kubectl -n revwallet-dev delete configmap alloy-config
 
 delete-loki:
 	helm -n revwallet-dev uninstall loki
 
 delete-grafana:
-	helm -n revwallet-dev uninstall grafana
 	kubectl -n revwallet-dev delete configmap revwallet-dashboard
+	helm -n revwallet-dev uninstall grafana
 
 delete-prometheus:
 	helm -n revwallet-dev uninstall prometheus

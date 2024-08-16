@@ -139,3 +139,4 @@ This script will:
 - [ ] Screenshots dashboards
 - [ ] List metrics exposed by RevWallet API
 - [ ] Code coverage badges in README
+- [ ] Publish RevWallet API chart in ArtifactHub
