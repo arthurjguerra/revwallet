@@ -1,0 +1,48 @@
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+    - name: 'default'
+      orgId: 1
+      folder: ''
+      type: file
+      disableDeletion: false
+      editable: true
+      options:
+        path: /var/lib/grafana/dashboards/default
+
+dashboardsConfigMaps:
+  default: "revwallet-dashboard"
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+    - name: Prometheus
+      type: prometheus
+      url: http://prometheus-server
+      access: proxy
+      isDefault: true
+      editable: false
+      basicAuth: false
+    - name: Loki
+      type: loki
+      url: http://loki:3100
+      access: proxy
+      isDefault: false
+      editable: false
+      basicAuth: false
+
+
+grafana.ini:
+  server:
+    protocol: http
+    #serve_from_sub_path: true
+    #root_url: http://nginx.revwallet-dev.svc.cluster.local/grafana/
+  auth.anonymous:
+    enabled: true
+    org_role: Admin
+
+# Disable admin user creation
+adminUser: ""
+adminPassword: ""

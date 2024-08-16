@@ -1,0 +1,6 @@
+loki:
+  image:
+    tag: 2.9.3
+
+promtail:
+  enabled: false
