@@ -1,3 +1,6 @@
+![Build](https://github.com/github/docs/actions/workflows/build.yml/badge.svg)
+![Tests](https://github.com/github/docs/actions/workflows/tests.yml/badge.svg)
+
 # RevWallet
 Wallet API where users can deposit, withdraw, and check the balance of a wallet. 
 
