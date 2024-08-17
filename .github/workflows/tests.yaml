@@ -1,0 +1,50 @@
+name: ci
+
+on:
+  workflow_call:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        id: python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install pipenv
+        run: |
+          pip install pipenv
+
+      # Tests in Docker Compose
+      - name: Start containers
+        run: make compose-up
+
+      - name: Run tests for Docker Compose
+        run: make tests
+      
+      - name: Stop containers and remove volumes
+        if: always()
+        run: make compose-down
+
+      # Tests in K8s
+      - name: Setup K8s and Helm Repos
+        run: make setup
+
+      - name: Deploy to K8s
+        run: make deploy
+
+      - name: Port-Foward to K8s
+        run: make port-forward
+
+      - name: Run tests for K8s
+        run: make tests
+      
+      - name: Stop port-forward
+        if: always()
+        run: make stop-port-forward

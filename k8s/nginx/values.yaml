@@ -27,3 +27,6 @@ extraVolumeMounts:
   - name: nginx-htpasswd
     mountPath: /tmp/.htpasswd
     subPath: .htpasswd
+
+commonLabels:
+  app: nginx

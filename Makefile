@@ -143,3 +143,9 @@ delete-api:
 
 delete-db:
 	kubectl -n revwallet-dev delete -f k8s/revwallet-db
+
+port-forward:
+	bash scripts/port-forward
+
+stop-port-forward:
+	bash scripts/port-forward --stop
