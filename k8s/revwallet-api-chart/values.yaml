@@ -22,7 +22,8 @@ serviceAccount:
   name: "revwallet-api-sa"
 
 podAnnotations: {}
-podLabels: {}
+podLabels:
+  app: revwallet-api
 
 podSecurityContext: {}
 
