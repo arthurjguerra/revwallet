@@ -36,13 +36,8 @@ datasources:
 
 grafana.ini:
   server:
-    protocol: http
-    #serve_from_sub_path: true
-    #root_url: http://nginx.revwallet-dev.svc.cluster.local/grafana/
+    serve_from_sub_path: true
+    root_url: http://localhost:8080/grafana/
   auth.anonymous:
     enabled: true
     org_role: Admin
-
-# Disable admin user creation
-adminUser: ""
-adminPassword: ""

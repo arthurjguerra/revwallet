@@ -74,22 +74,22 @@ alloy:
 	kubectl -n revwallet-dev delete configmap alloy-config >/dev/null 2>&1 || true
 	kubectl -n revwallet-dev create configmap alloy-config --from-file=config/alloy/config.alloy
 
-	helm repo update
+	helm repo update grafana
 	helm -n revwallet-dev upgrade --install --values k8s/alloy/values.yaml alloy grafana/alloy
 
 loki:
-	helm repo update
+	helm repo update grafana
 	helm -n revwallet-dev upgrade --install --values k8s/loki/values.yaml loki grafana/loki-stack
 
 prometheus:
-	helm repo update
+	helm repo update prometheus-community
 	helm -n revwallet-dev upgrade --install --values k8s/prometheus/values.yaml prometheus prometheus-community/prometheus
 
 grafana:
 	kubectl -n revwallet-dev delete configmap revwallet-dashboard >/dev/null 2>&1 || true
 	kubectl -n revwallet-dev create configmap revwallet-dashboard --from-file=config/grafana/dashboard.json
 
-	helm repo update
+	helm repo update grafana
 	helm -n revwallet-dev upgrade --install --values k8s/grafana/values.yaml grafana grafana/grafana
 
 api:
@@ -106,7 +106,7 @@ nginx:
 	kubectl -n revwallet-dev delete configmap nginx-htpasswd >/dev/null 2>&1 || true
 	kubectl -n revwallet-dev create configmap nginx-htpasswd --from-file=config/nginx/.htpasswd
 
-	helm repo update
+	helm repo update bitnami
 	helm -n revwallet-dev upgrade --install --values k8s/nginx/values.yaml nginx bitnami/nginx
 
 delete:
@@ -119,6 +119,7 @@ delete:
 	$(MAKE) delete-grafana
 
 delete-nginx:
+	$(MAKE) stop-port-forward
 	kubectl -n revwallet-dev delete configmap nginx-conf
 	kubectl -n revwallet-dev delete configmap nginx-html
 	kubectl -n revwallet-dev delete configmap nginx-htpasswd
