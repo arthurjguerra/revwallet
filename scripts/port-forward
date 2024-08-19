@@ -19,7 +19,7 @@ function stop_port_forward () {
 }
 
 function start_port_forward () {
-  delete_port_forward  # Make sure there is no port-forward running
+  stop_port_forward  # Make sure there is no port-forward running
 
   echo "Waiting for the API pod to be in the running state..."
   kubectl -n $NAMESPACE wait --for=condition=Ready pod -l app=revwallet-api
