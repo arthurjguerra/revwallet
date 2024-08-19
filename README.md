@@ -1,5 +1,6 @@
 ![Build](https://github.com/arthurjguerra/revwallet/actions/workflows/build.yaml/badge.svg)
 ![Tests](https://github.com/arthurjguerra/revwallet/actions/workflows/tests.yaml/badge.svg)
+![Latest Release](https://github.com/arthurjguerra/revwallet/releases/latest)
 
 # RevWallet
 RevWallet is a wallet API that allows users to deposit, withdraw, and check their balance. It serves as a practice project for infrastructure as code, CI/CD, immutable infrastructure, and Python software development.
