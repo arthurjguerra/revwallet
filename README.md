@@ -102,15 +102,16 @@ make deploy  # deploys all resources
 
 Make sure the API is accessible locally:
 ```
-kubectl -n revwallet-dev port-forward pod/<NGINX_POD> 8080:8080
+make port-forward
 ```
 
 Then, access the API at http://localhost:8080
 
 To shut everything down, run:
 ```
-make delete    # deletes resources from K8s cluster
-make shutdown  # deletes the k8s cluster
+make stop-port-forward     # stops port forward to nginx
+make delete                # deletes resources from K8s cluster
+make shutdown              # deletes the k8s cluster
 ```
 
 For more details about RevWallet on Docker Compose, refer to the [Kubernetes documentation](docs/k8s-kind.md).
