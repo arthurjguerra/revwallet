@@ -63,9 +63,9 @@ services:
       timeout: 10s
       retries: 5
 
-  prometheus:
+  prometheus-server:
     image: prom/prometheus:latest
-    container_name: prometheus
+    container_name: prometheus-server
     volumes:
       - ./config/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yaml
     command:
@@ -111,7 +111,7 @@ services:
     depends_on:
       revwallet-db:
         condition: service_healthy
-      prometheus:
+      prometheus-server:
         condition: service_healthy
       grafana:
         condition: service_healthy
@@ -147,7 +147,7 @@ services:
     depends_on:
       revwallet-api:
         condition: service_started
-      prometheus:
+      prometheus-server:
         condition: service_healthy
       grafana:
         condition: service_healthy
