@@ -72,7 +72,7 @@ make compose-up
 ```
 Then, access the API at http://localhost:8080
 
-Shut down the API:
+To shut everything down, run:
 ```
 make compose-down
 ```
@@ -83,26 +83,26 @@ For more details, refer to the [Docker Compose documentation](docs/docker-compos
 How to deploy RevWallet to Kubernetes locally:
 
 ```
-make setup deploy port-forward
+make create deploy
 ```
 
-This will create the Kubernetes cluster, deploy all resources, and make the API accessible at http://localhost:8080
+Access RevWallet at http://localhost:8080/
 
 To shut everything down, run:
 ```
-make stop-port-forward delete shutdown
+make delete terminate
 ```
 
 For more details, refer to the [Kubernetes documentation](docs/k8s-kind.md).
 
 ## Generating Random Data
-To generate random data for testing purposes, you can use the [generate-data](./scripts/generate-data) script. Run the following command in your terminal to populate the API with sample data:
+To populate the API with sample data, run:
 
 ```
-bash scripts/generate-data
+make data
 ```
 
-This script will:
+This command will:
 - Create some wallets.
 - Check the balance of these wallets.
 - Fetch all wallets from the API.
