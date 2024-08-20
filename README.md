@@ -90,7 +90,6 @@ This will create the Kubernetes cluster, deploy all resources, and make the API 
 
 To shut everything down, run:
 ```
-# stop port forward to nginx, delete k8s resources, delete the k8s cluster
 make stop-port-forward delete shutdown
 ```
 
