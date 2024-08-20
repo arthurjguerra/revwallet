@@ -83,22 +83,16 @@ For more details, refer to the [Docker Compose documentation](docs/docker-compos
 Set up and deploy the API:
 
 ```
-make setup   # creates the cluster and namespace
-make deploy  # deploys all resources
-```
-
-Make the API accessible locally:
-```
-make port-forward
+# create the k8s cluster, deploy all resources, make API accessible at localhost
+make setup deploy port-forward
 ```
 
 Access the API at http://localhost:8080
 
 To shut everything down, run:
 ```
-make stop-port-forward     # stops port forward to nginx
-make delete                # deletes resources from K8s cluster
-make shutdown              # deletes the k8s cluster
+# stop port forward to nginx, delete k8s resources, delete the k8s cluster
+make stop-port-forward delete shutdown
 ```
 
 For more details, refer to the [Kubernetes documentation](docs/k8s-kind.md).
