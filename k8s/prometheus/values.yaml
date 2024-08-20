@@ -25,3 +25,6 @@ serverFiles:
         scheme: http
         static_configs:
         - targets: ['revwallet-api:5000']
+
+commonMetaLabels:
+  app: prometheus
