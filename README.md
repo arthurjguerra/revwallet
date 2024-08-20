@@ -24,17 +24,15 @@ graph TD
   prometheus -.-> grafana
   prometheus -.-> revwallet-api
   revwallet-api -.-> revwallet-db
-  nginx -- no auth --> revwallet-api
-  nginx -- basic auth --> prometheus
-  nginx -- basic auth --> grafana
+  nginx --> revwallet-api
+  nginx --> prometheus
+  nginx --> grafana
   id1 -- /prometheus --> nginx
   id1 -- /grafana --> nginx
-  id1[[revwallet.com]] -- /wallet --> nginx
+  id1[[localhost:8080]] -- /wallet --> nginx
 
   classDef public fill:#c2e59c,stroke:#000,stroke-width:2px;
   classDef private fill:#f3e59c,stroke:#000,stroke-width:2px;
-  linkStyle 7,8,9,10 stroke-width:3px,stroke:red
-  linkStyle 6,11 stroke-width:3px,stroke:green
 
   class loki private
   class alloy private

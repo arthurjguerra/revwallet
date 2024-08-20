@@ -14,9 +14,6 @@ extraVolumes:
   - name: nginx-conf
     configMap:
       name: nginx-conf
-  - name: nginx-htpasswd
-    configMap:
-      name: nginx-htpasswd
 
 extraVolumeMounts:
   - name: nginx-html
@@ -24,9 +21,6 @@ extraVolumeMounts:
   - name: nginx-conf
     mountPath: /opt/bitnami/nginx/conf/nginx.conf
     subPath: nginx.conf
-  - name: nginx-htpasswd
-    mountPath: /tmp/.htpasswd
-    subPath: .htpasswd
 
 commonLabels:
   app: nginx

@@ -100,7 +100,6 @@ helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
 kubectl -n revwallet-dev create configmap nginx-html --from-file=config/nginx/revwallet.html --from-file=config/nginx/404.html 
 kubectl -n revwallet-dev create configmap nginx-conf --from-file=config/nginx/nginx.conf
-kubectl -n revwallet-dev create configmap nginx-htpasswd --from-file=config/nginx/.htpasswd
 helm -n revwallet-dev upgrade --install --values k8s/nginx/values.yaml nginx bitnami/nginx
 ```
 To access the app, first, run:
@@ -123,7 +122,6 @@ kubectl -n revwallet-dev delete -f k8s/revwallet-db
 kubectl -n revwallet-dev delete configmap revwallet-dashboard
 kubectl -n revwallet-dev delete configmap nginx-conf
 kubectl -n revwallet-dev delete configmap nginx-html
-kubectl -n revwallet-dev delete configmap nginx-htpasswd
 ```
 
 To delete the cluster, run:
