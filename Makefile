@@ -103,9 +103,6 @@ nginx:
 	kubectl -n revwallet-dev delete configmap nginx-conf >/dev/null 2>&1 || true
 	kubectl -n revwallet-dev create configmap nginx-conf --from-file=k8s/nginx/nginx.conf
 
-	kubectl -n revwallet-dev delete configmap nginx-htpasswd >/dev/null 2>&1 || true
-	kubectl -n revwallet-dev create configmap nginx-htpasswd --from-file=config/nginx/.htpasswd
-
 	helm repo update bitnami
 	helm -n revwallet-dev upgrade --install --values k8s/nginx/values.yaml nginx bitnami/nginx
 
@@ -122,7 +119,6 @@ delete-nginx:
 	$(MAKE) stop-port-forward
 	kubectl -n revwallet-dev delete configmap nginx-conf
 	kubectl -n revwallet-dev delete configmap nginx-html
-	kubectl -n revwallet-dev delete configmap nginx-htpasswd
 	helm -n revwallet-dev uninstall nginx
 
 delete-alloy:

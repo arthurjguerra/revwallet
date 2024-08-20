@@ -130,7 +130,6 @@ services:
     container_name: nginx
     volumes:
       - ./config/nginx/nginx.conf:/opt/bitnami/nginx/conf/nginx.conf
-      - ./config/nginx/.htpasswd:/etc/nginx/.htpasswd
       - ./config/nginx/revwallet.html:/opt/bitnami/nginx/html/revwallet.html
       - ./config/nginx/404.html:/opt/bitnami/nginx/html/404.html
       - ./logs/nginx:/tmp/nginx
