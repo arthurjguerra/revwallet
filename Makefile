@@ -19,9 +19,9 @@
 	delete \
 	compose-up \
 	compose-down \
-	setup \
+	create \
 	setup-helm \
-	shutdown \
+	terminate \
 	tests
 
 
@@ -41,7 +41,7 @@ compose-down:
 
 ################################ K8s Targets (Local) #################################
 
-setup:
+create:
 	kind create cluster --name revwallet
 	kubectl create namespace revwallet-dev
 	kubectl config set-context kind-revwallet --namespace=revwallet-dev
@@ -53,7 +53,7 @@ setup-helm:
 	helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 	helm repo update
 
-shutdown:
+terminate:
 	$(MAKE) delete
 	helm repo remove bitnami grafana prometheus-community
 	kind delete cluster --name revwallet
@@ -66,6 +66,7 @@ deploy:
 	$(MAKE) grafana
 	$(MAKE) api
 	$(MAKE) nginx
+	$(MAKE) port-forward
 
 db:
 	kubectl apply -f k8s/revwallet-db
@@ -107,6 +108,7 @@ nginx:
 	helm -n revwallet-dev upgrade --install --values k8s/nginx/values.yaml nginx bitnami/nginx
 
 delete:
+	$(MAKE) stop-port-forward
 	$(MAKE) delete-nginx 
 	$(MAKE) delete-api
 	$(MAKE) delete-db
@@ -141,8 +143,12 @@ delete-api:
 delete-db:
 	kubectl -n revwallet-dev delete -f k8s/revwallet-db
 
+################################## Utils Targets #############################
 port-forward:
 	bash scripts/port-forward
 
 stop-port-forward:
 	bash scripts/port-forward --stop
+
+data:
+	bash scripts/generate-data
