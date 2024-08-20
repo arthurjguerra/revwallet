@@ -90,7 +90,7 @@ Access RevWallet at http://localhost:8080/
 
 To shut everything down, run:
 ```
-make delete terminate
+make terminate
 ```
 
 For more details, refer to the [Kubernetes documentation](docs/k8s-kind.md).
