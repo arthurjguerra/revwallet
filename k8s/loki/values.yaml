@@ -1,6 +1,6 @@
 loki:
   image:
-    tag: 2.9.3
+    tag: latest
 
 promtail:
   enabled: false

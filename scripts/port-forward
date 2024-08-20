@@ -21,9 +21,6 @@ function stop_port_forward () {
 function start_port_forward () {
   stop_port_forward  # Make sure there is no port-forward running
 
-  echo "Waiting for the API pod to be in the running state..."
-  kubectl -n $NAMESPACE wait --timeout=5m --for=condition=Ready pod -l app=revwallet-api
-
   echo "Waiting for the nginx pod to be in the running state..."
   kubectl -n $NAMESPACE wait --timeout=5m --for=condition=Ready pod -l app=nginx
 

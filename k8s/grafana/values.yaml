@@ -41,3 +41,6 @@ grafana.ini:
   auth.anonymous:
     enabled: true
     org_role: Admin
+
+podLabels:
+  app: grafana

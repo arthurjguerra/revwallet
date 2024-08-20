@@ -58,18 +58,27 @@ terminate:
 	helm repo remove bitnami grafana prometheus-community
 	kind delete cluster --name revwallet
 
-deploy: 
+deploy:
 	$(MAKE) db
+	$(MAKE) prometheus
 	$(MAKE) alloy
 	$(MAKE) loki
-	$(MAKE) prometheus
 	$(MAKE) grafana
 	$(MAKE) api
 	$(MAKE) nginx
-	$(MAKE) port-forward
 
 db:
 	kubectl apply -f k8s/revwallet-db
+
+api:
+	kubectl -n revwallet-dev wait --timeout=5m --for=condition=Ready pod -l app=revwallet-db
+
+	helm repo update
+	helm -n revwallet-dev upgrade --install --values k8s/revwallet-api-chart/values.yaml revwallet-api k8s/revwallet-api-chart
+
+prometheus:
+	helm repo update prometheus-community
+	helm -n revwallet-dev upgrade --install --values k8s/prometheus/values.yaml prometheus prometheus-community/prometheus
 
 alloy:
 	kubectl -n revwallet-dev delete configmap alloy-config >/dev/null 2>&1 || true
@@ -82,22 +91,23 @@ loki:
 	helm repo update grafana
 	helm -n revwallet-dev upgrade --install --values k8s/loki/values.yaml loki grafana/loki-stack
 
-prometheus:
-	helm repo update prometheus-community
-	helm -n revwallet-dev upgrade --install --values k8s/prometheus/values.yaml prometheus prometheus-community/prometheus
-
 grafana:
+	kubectl -n revwallet-dev wait --timeout=5m --for=condition=Ready pod -l app=loki
+	kubectl -n revwallet-dev wait --timeout=5m --for=condition=Ready pod -l app=prometheus
+
 	kubectl -n revwallet-dev delete configmap revwallet-dashboard >/dev/null 2>&1 || true
 	kubectl -n revwallet-dev create configmap revwallet-dashboard --from-file=config/grafana/dashboard.json
 
 	helm repo update grafana
 	helm -n revwallet-dev upgrade --install --values k8s/grafana/values.yaml grafana grafana/grafana
 
-api:
-	helm repo update
-	helm -n revwallet-dev upgrade --install --values k8s/revwallet-api-chart/values.yaml revwallet-api k8s/revwallet-api-chart
-
 nginx:
+	$(MAKE) stop-port-forward
+
+	kubectl -n revwallet-dev wait --timeout=5m --for=condition=Ready pod -l app=revwallet-api
+	kubectl -n revwallet-dev wait --timeout=5m --for=condition=Ready pod -l app=prometheus
+	kubectl -n revwallet-dev wait --timeout=5m --for=condition=Ready pod -l app=grafana
+
 	kubectl -n revwallet-dev delete configmap nginx-html >/dev/null 2>&1 || true
 	kubectl -n revwallet-dev create configmap nginx-html --from-file=config/nginx/revwallet.html --from-file=config/nginx/404.html 
 
@@ -106,6 +116,8 @@ nginx:
 
 	helm repo update bitnami
 	helm -n revwallet-dev upgrade --install --values k8s/nginx/values.yaml nginx bitnami/nginx
+
+	$(MAKE) port-forward
 
 delete:
 	$(MAKE) stop-port-forward
@@ -119,8 +131,8 @@ delete:
 
 delete-nginx:
 	$(MAKE) stop-port-forward
-	kubectl -n revwallet-dev delete configmap nginx-conf
-	kubectl -n revwallet-dev delete configmap nginx-html
+	kubectl -n revwallet-dev delete configmap nginx-conf >/dev/null 2>&1 || true
+	kubectl -n revwallet-dev delete configmap nginx-html >/dev/null 2>&1 || true
 	helm -n revwallet-dev uninstall nginx
 
 delete-alloy:
@@ -131,7 +143,7 @@ delete-loki:
 	helm -n revwallet-dev uninstall loki
 
 delete-grafana:
-	kubectl -n revwallet-dev delete configmap revwallet-dashboard
+	kubectl -n revwallet-dev delete configmap revwallet-dashboard >/dev/null 2>&1 || true
 	helm -n revwallet-dev uninstall grafana
 
 delete-prometheus:
