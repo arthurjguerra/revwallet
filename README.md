@@ -80,14 +80,13 @@ make compose-down
 For more details, refer to the [Docker Compose documentation](docs/docker-compose.md).
 
 ## Running RevWallet on Kubernetes (locally)
-Set up and deploy the API:
+How to deploy RevWallet to Kubernetes locally:
 
 ```
-# create the k8s cluster, deploy all resources, make API accessible at localhost
 make setup deploy port-forward
 ```
 
-Access the API at http://localhost:8080
+This will create the Kubernetes cluster, deploy all resources, and make the API accessible at http://localhost:8080
 
 To shut everything down, run:
 ```
