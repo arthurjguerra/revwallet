@@ -101,7 +101,7 @@ nginx:
 	kubectl -n revwallet-dev create configmap nginx-html --from-file=config/nginx/revwallet.html --from-file=config/nginx/404.html 
 
 	kubectl -n revwallet-dev delete configmap nginx-conf >/dev/null 2>&1 || true
-	kubectl -n revwallet-dev create configmap nginx-conf --from-file=config/nginx/nginx.conf
+	kubectl -n revwallet-dev create configmap nginx-conf --from-file=k8s/nginx/nginx.conf
 
 	kubectl -n revwallet-dev delete configmap nginx-htpasswd >/dev/null 2>&1 || true
 	kubectl -n revwallet-dev create configmap nginx-htpasswd --from-file=config/nginx/.htpasswd

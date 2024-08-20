@@ -33,8 +33,6 @@ graph TD
 
   classDef public fill:#c2e59c,stroke:#000,stroke-width:2px;
   classDef private fill:#f3e59c,stroke:#000,stroke-width:2px;
-  linkStyle 7,8,9,10 stroke-width:3px,stroke:red
-  linkStyle 6,11 stroke-width:3px,stroke:green
 
   class loki private
   class alloy private
