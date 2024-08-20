@@ -73,7 +73,7 @@ db:
 
 alloy:
 	kubectl -n revwallet-dev delete configmap alloy-config >/dev/null 2>&1 || true
-	kubectl -n revwallet-dev create configmap alloy-config --from-file=config/alloy/config.alloy
+	kubectl -n revwallet-dev create configmap alloy-config --from-file=k8s/alloy/config.alloy
 
 	helm repo update grafana
 	helm -n revwallet-dev upgrade --install --values k8s/alloy/values.yaml alloy grafana/alloy
