@@ -18,9 +18,6 @@ services:
   alloy:
     image: grafana/alloy:latest
     container_name: alloy
-    depends_on:
-      loki:
-        condition: service_healthy
     volumes:
       - ./config/alloy/config.alloy:/etc/alloy/config.alloy
       - ./logs/revwallet:/var/log/revwallet
@@ -40,6 +37,8 @@ services:
     image: grafana/grafana:latest
     container_name: grafana
     depends_on:
+      prometheus:
+        condition: service_healthy
       loki:
         condition: service_healthy
       alloy:
