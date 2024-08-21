@@ -74,7 +74,7 @@ api:
 	kubectl -n revwallet-dev wait --timeout=5m --for=condition=Ready pod -l app=revwallet-db
 
 	helm repo update
-	helm -n revwallet-dev upgrade --install --values k8s/revwallet-api-chart/values.yaml revwallet-api k8s/revwallet-api-chart
+	helm -n revwallet-dev upgrade --install --values k8s/revwallet-api/values.yaml revwallet-api charts/revwallet-api
 
 prometheus:
 	helm repo update prometheus-community

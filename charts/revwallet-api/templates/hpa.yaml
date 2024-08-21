@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "revwallet-api-chart.fullname" . }}
+  name: {{ include "revwallet-api.fullname" . }}
   labels:
-    {{- include "revwallet-api-chart.labels" . | nindent 4 }}
+    {{- include "revwallet-api.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "revwallet-api-chart.fullname" . }}
+    name: {{ include "revwallet-api.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:

@@ -1,0 +1,9 @@
+image:
+  repository: arthurjguerra18/revwallet
+  tag: "v0.4.0"
+
+env:
+  DB_USERNAME: revwallet
+  DB_PASSWORD: mypassword
+  DB_NAME: revwallet
+  DB_HOST: revwallet-db.revwallet-dev.svc.cluster.local
