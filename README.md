@@ -46,10 +46,6 @@ The RevWallet API is hosted behind an Nginx reverse proxy. Grafana and Prometheu
 
 Only the RevWallet API, Grafana, and Prometheus are exposed externally. Internal services like Loki, Alloy, and the database remain accessible only within the internal network.
 
-## Dashboard
-RevWallet is shipped with a default dashboard that can be accessed in Grafana:
-![revwallet-dashboard](./img/revwallet-dashboard.png)
-
 ## Requirements
 RevWallet is a [Flask](https://flask.palletsprojects.com/en/3.0.x/) application that runs on Docker. To get started, ensure you have the following dependencies installed on your system:
 - [Docker](https://docs.docker.com/guides/getting-started/)
@@ -106,3 +102,18 @@ This command will:
 - Create some wallets.
 - Check the balance of these wallets.
 - Fetch all wallets from the API.
+
+## Observability
+
+### Metrics
+RevWallet leverages on the `prometheus-flask-exporter` package to expose some basic metrics, for example:
+
+- `flask_http_request_duration_seconds`: Flask HTTP request duration in seconds for all Flask requests.
+- `flask_http_request_total`: Total number of HTTP requests for all Flask requests.
+- `flask_http_request_exceptions_total`: Total number of uncaught exceptions when serving Flask requests.
+
+For more information, refer to the [Prometheus Flask Exporter repository](https://github.com/rycus86/prometheus_flask_exporter).
+
+### Dashboard
+RevWallet is shipped with a basic dashboard that can be accessed in Grafana:
+![revwallet-dashboard](./img/revwallet-dashboard.png)
