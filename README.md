@@ -116,4 +116,4 @@ For more information, refer to the [Prometheus Flask Exporter repository](https:
 
 ### Dashboard
 RevWallet is shipped with a basic dashboard that can be accessed in Grafana:
-![revwallet-dashboard](./img/revwallet-dashboard.png)
+![revwallet-dashboard](./docs/img/revwallet-dashboard.png)

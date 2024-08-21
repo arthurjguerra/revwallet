@@ -37,7 +37,7 @@ kubectl get pods
 ```
 3. Deploy the database:
 ```
-kubectl apply -f k8s/revwallet-db
+kubectl apply -f helm/revwallet-db
 ```
 If you want to make sure the DB is deployed correctly, you can run the following commands to check if resources were created properly:
 ```
@@ -71,28 +71,28 @@ revwallet=#
 helm repo add grafana https://grafana.github.io/helm-charts
 helm repo update
 kubectl -n revwallet-dev create configmap alloy-config --from-file=config/alloy/config.alloy
-helm -n revwallet-dev upgrade --install --values k8s/alloy/values.yaml alloy grafana/alloy
+helm -n revwallet-dev upgrade --install --values helm/alloy/values.yaml alloy grafana/alloy
 ```
 5. Deploy Loki:
 ```
 helm repo update
-helm -n revwallet-dev upgrade --install --values k8s/loki/values.yaml loki grafana/loki-stack
+helm -n revwallet-dev upgrade --install --values helm/loki/values.yaml loki grafana/loki-stack
 ```
 6. Deploy Prometheus:
 ```
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
-helm -n revwallet-dev upgrade --install --values k8s/prometheus/values.yaml prometheus prometheus-community/prometheus
+helm -n revwallet-dev upgrade --install --values helm/prometheus/values.yaml prometheus prometheus-community/prometheus
 ```
 7. Deploy Grafana:
 ```
 helm repo update
 kubectl -n revwallet-dev create configmap revwallet-dashboard --from-file=config/grafana/dashboard.json
-helm -n revwallet-dev upgrade --install --values k8s/grafana/values.yaml grafana grafana/grafana
+helm -n revwallet-dev upgrade --install --values helm/grafana/values.yaml grafana grafana/grafana
 ```
 8. Deploy the API:
 ```
-helm -n revwallet-dev upgrade --install --values charts/revwallet-api-/values.yaml revwallet-api k8s/revwallet-api
+helm -n revwallet-dev upgrade --install --values charts/revwallet-api-/values.yaml revwallet-api helm/revwallet-api
 ```
 9. Deploy Nginx:
 ```
@@ -100,7 +100,7 @@ helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
 kubectl -n revwallet-dev create configmap nginx-html --from-file=config/nginx/revwallet.html --from-file=config/nginx/404.html 
 kubectl -n revwallet-dev create configmap nginx-conf --from-file=config/nginx/nginx.conf
-helm -n revwallet-dev upgrade --install --values k8s/nginx/values.yaml nginx bitnami/nginx
+helm -n revwallet-dev upgrade --install --values helm/nginx/values.yaml nginx bitnami/nginx
 ```
 To access the app, first, run:
 ```
@@ -118,7 +118,7 @@ helm -n revwallet-dev uninstall grafana
 helm -n revwallet-dev uninstall prometheus
 helm -n revwallet-dev uninstall revwallet-api
 helm repo remove grafana prometheus-community bitnami
-kubectl -n revwallet-dev delete -f k8s/revwallet-db
+kubectl -n revwallet-dev delete -f helm/revwallet-db
 kubectl -n revwallet-dev delete configmap revwallet-dashboard
 kubectl -n revwallet-dev delete configmap nginx-conf
 kubectl -n revwallet-dev delete configmap nginx-html
