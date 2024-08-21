@@ -55,7 +55,7 @@ autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 3
-  targetCPUUtilizationPercentage: 80
+  targetCPUUtilizationPercentage: 70
 
 persistentVolumeClaim:
   name: revwallet-api-log-volume-claim
