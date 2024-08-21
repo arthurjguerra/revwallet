@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ .Values.persistentVolumeClaim.name }}
   labels:
-    {{- include "revwallet-api-chart.labels" . | nindent 4 }}
+    {{- include "revwallet-api.labels" . | nindent 4 }}
 spec:
   accessModes:
     - {{ .Values.persistentVolumeClaim.accessModes | default "ReadWriteOnce" }}

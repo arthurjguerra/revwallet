@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: arthurjguerra18/revwallet
   pullPolicy: Always
-  tag: "v0.3.0"
+  tag: latest
 
 imagePullSecrets: []
 nameOverride: "revwallet-api"
@@ -13,7 +13,7 @@ env:
   DB_USERNAME: revwallet
   DB_PASSWORD: mypassword
   DB_NAME: revwallet
-  DB_HOST: revwallet-db.revwallet-dev.svc.cluster.local
+  DB_HOST: revwallet-db
 
 serviceAccount:
   create: true

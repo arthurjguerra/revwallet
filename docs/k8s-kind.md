@@ -92,7 +92,7 @@ helm -n revwallet-dev upgrade --install --values k8s/grafana/values.yaml grafana
 ```
 8. Deploy the API:
 ```
-helm -n revwallet-dev upgrade --install --values k8s/revwallet-api-chart/values.yaml revwallet-api k8s/revwallet-api-chart
+helm -n revwallet-dev upgrade --install --values charts/revwallet-api-/values.yaml revwallet-api k8s/revwallet-api
 ```
 9. Deploy Nginx:
 ```
