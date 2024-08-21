@@ -44,7 +44,7 @@ graph TD
 ```
 The RevWallet API is hosted behind an Nginx reverse proxy. Grafana and Prometheus are also routed through Nginx for unified access.
 
-Only the RevWallet API, Grafana, and Prometheus are exposed externally, with authentication required for the latter two. Internal services like Loki, Alloy, and the database remain accessible only within the internal network.
+Only the RevWallet API, Grafana, and Prometheus are exposed externally. Internal services like Loki, Alloy, and the database remain accessible only within the internal network.
 
 ## Dashboard
 RevWallet is shipped with a default dashboard that can be accessed in Grafana:
