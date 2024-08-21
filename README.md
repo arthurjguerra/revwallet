@@ -76,7 +76,7 @@ make compose-down
 For more details, refer to the [Docker Compose documentation](docs/docker-compose.md).
 
 ## Running RevWallet on Kubernetes (locally)
-How to deploy RevWallet to Kubernetes locally:
+Deploy RevWallet to Kubernetes locally:
 
 ```
 make create deploy
@@ -106,14 +106,24 @@ This command will:
 ## Observability
 
 ### Metrics
-RevWallet leverages on the `prometheus-flask-exporter` package to expose some basic metrics, for example:
+RevWallet utilizes the `prometheus-flask-exporter` package to expose basic metrics, including:
 
-- `flask_http_request_duration_seconds`: Flask HTTP request duration in seconds for all Flask requests.
-- `flask_http_request_total`: Total number of HTTP requests for all Flask requests.
+- `flask_http_request_duration_seconds`: Duration of Flask HTTP requests in seconds.
+- `flask_http_request_total`: Total number of HTTP requests made to Flask.
 - `flask_http_request_exceptions_total`: Total number of uncaught exceptions when serving Flask requests.
 
 For more information, refer to the [Prometheus Flask Exporter repository](https://github.com/rycus86/prometheus_flask_exporter).
 
 ### Dashboard
-RevWallet is shipped with a basic dashboard that can be accessed in Grafana:
+RevWallet includes a basic dashboard accessible in Grafana:
 ![revwallet-dashboard](./docs/img/revwallet-dashboard.png)
+
+## Helm Releases
+When a new tag is created, a new version of the RevWallet API chart is released via Github Actions. The Charts are hosted on Github Pages and are publicly available at [ArtifactHub](https://artifacthub.io/packages/helm/revwallet/revwallet-api).
+
+```mermaid
+flowchart LR
+  tag --> publish-chart
+  publish-chart --> pages-build-deployment
+  pages-build-deployment -- gh-pages branch --> index.yaml
+```
