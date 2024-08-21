@@ -1,6 +1,0 @@
-loki:
-  image:
-    tag: latest
-
-promtail:
-  enabled: false
