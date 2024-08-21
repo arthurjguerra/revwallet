@@ -164,3 +164,32 @@ stop-port-forward:
 
 data:
 	bash scripts/generate-data
+
+help:
+	@echo "RevWallet Makefile Usage:"
+	@echo "  make help                 - Display this help message."
+	@echo "  make create               - Create a local k8s cluster with kind."
+	@echo "  make deploy               - Deploy the API and all dependencies on k8s."
+	@echo "  make db                   - Deploy only the RevWallet database on k8s."
+	@echo "  make prometheus           - Deploy only Prometheus on k8s."
+	@echo "  make alloy                - Deploy only Alloy on k8s."
+	@echo "  make loki                 - Deploy only Loki on k8s."
+	@echo "  make grafana              - Deploy only Grafana on k8s."
+	@echo "  make api                  - Deploy only the RevWallet API on k8s."
+	@echo "  make nginx                - Deploy only Nginx on k8s."
+	@echo "  make test                 - Run the tests."
+	@echo "  make data                 - Generate sample data."
+	@echo "  make compose-up           - Start RevWallet API and dependencies with Docker Compose."
+	@echo "  make compose-down         - Stop RevWallet API and dependencies with Docker Compose."
+	@echo "  make terminate            - Delete all the running pods and terminate the k8s cluster."
+	@echo "  make port-forward         - Start port forwarding to Nginx."
+	@echo "  make stop-port-forward    - Stop port forwarding to Nginx."
+	@echo "  make setup-helm           - Install Helm repositories."
+	@echo "  make delete               - Delete the RevWallet API and all dependencies on k8s."
+	@echo "  make delete-db            - Delete only the RevWallet DB on k8s."
+	@echo "  make delete-prometheus    - Delete only Prometheus on k8s."
+	@echo "  make delete-alloy         - Delete only Alloy on k8s."
+	@echo "  make delete-loki          - Delete only Loki on k8s."
+	@echo "  make delete-grafana       - Delete only Grafana on k8s."
+	@echo "  make delete-api           - Delete only the RevWallet API on k8s."
+	@echo "  make delete-nginx         - Delete only Nginx deployment on k8s."
