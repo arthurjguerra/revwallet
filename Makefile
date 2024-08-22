@@ -103,6 +103,8 @@ grafana:
 	helm -n revwallet-dev upgrade --install --values helm/grafana/values.yaml grafana grafana/grafana
 
 nginx:
+	kubectl -n revwallet-dev get pods
+
 	$(MAKE) stop-port-forward
 
 	kubectl -n revwallet-dev wait --timeout=5m --for=condition=Ready pod -l app=revwallet-api
