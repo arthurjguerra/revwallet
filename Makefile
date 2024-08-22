@@ -51,6 +51,7 @@ setup-helm:
 	helm repo add bitnami https://charts.bitnami.com/bitnami
 	helm repo add grafana https://grafana.github.io/helm-charts
 	helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+	helm repo add revwallet-api https://arthurjguerra.github.io/revwallet
 	helm repo update
 
 terminate:
@@ -74,7 +75,7 @@ api:
 	kubectl -n revwallet-dev wait --timeout=5m --for=condition=Ready pod -l app=revwallet-db
 
 	helm repo update
-	helm -n revwallet-dev upgrade --install --values helm/revwallet-api/values.yaml revwallet-api charts/revwallet-api
+	helm -n revwallet-dev upgrade --install --values helm/revwallet-api/values.yaml revwallet-api revwallet-api/revwallet-api
 
 prometheus:
 	helm repo update prometheus-community
