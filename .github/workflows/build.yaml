@@ -63,6 +63,7 @@ jobs:
         id: create-pr
         uses: peter-evans/create-pull-request@v6
         with:
+          token: ${{ secrets.CREATE_PR_TOKEN }}
           commit-message: set api image in helm to ${{ steps.get_tag.outputs.tag }}
           base: main
           branch: api-image-update-${{ steps.get_tag.outputs.tag }}
