@@ -51,13 +51,19 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         run: |
           new_revwallet_api_tag="${{ steps.get_tag.outputs.tag }}"
-          sed -i "s|tag:.*|tag: \"$new_revwallet_api_tag\"|" charts/revwallet-api/values.yaml
+
+          echo "Set the RevWallet API image tag to $new_revwallet_api_tag in Helm values.yaml"
+          sed -i "s|tag:.*|tag: $new_revwallet_api_tag|" charts/revwallet-api/values.yaml
+
+          echo "Set RevWallet API Chart version to $new_revwallet_api_tag"
+          sed -i "s|version:.*|version: $new_revwallet_api_tag|" charts/revwallet-api/Chart.yaml
 
       - name: Create Pull Request
+        if: startsWith(github.ref, 'refs/tags/')
         id: create-pr
         uses: peter-evans/create-pull-request@v6
         with:
-          commit-message: set api image in Helm to ${{ steps.get_tag.outputs.tag }}
+          commit-message: set api image in helm to ${{ steps.get_tag.outputs.tag }}
           branch: api-image-update-${{ steps.get_tag.outputs.tag }}
           delete-branch: true
           title: 'RevWallet API image update to ${{ steps.get_tag.outputs.tag }} in Helm'
