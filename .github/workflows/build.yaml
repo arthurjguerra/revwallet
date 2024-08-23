@@ -64,6 +64,7 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         with:
           commit-message: set api image in helm to ${{ steps.get_tag.outputs.tag }}
+          base: main
           branch: api-image-update-${{ steps.get_tag.outputs.tag }}
           delete-branch: true
           title: 'RevWallet API image update to ${{ steps.get_tag.outputs.tag }} in Helm'
