@@ -3,7 +3,7 @@ from .wallet import Wallet, db, logger
 
 bp = Blueprint('wallet', __name__)
 
-@bp.route('/', methods=['GET', 'POST'])
+@bp.route('/', methods=['GET', 'POST', 'DELETE'])
 def index():
     if request.method == 'GET':
         logger.info('Request to get all wallets from DB')
@@ -22,6 +22,19 @@ def index():
             session.add(new_wallet)
             session.commit()
             return jsonify({'id': new_wallet.id}), 201
+
+
+@bp.route("/<id>", methods=["DELETE"])
+def delete(id):
+    logger.info(f"Wallet ID to delete: {id}")
+    with db.session() as session:
+        wallet = session.get(Wallet, id)
+        if wallet:
+            session.delete(wallet)
+            session.commit()
+            return '', 204
+        else:
+            return jsonify({'error': f'Could not delete Wallet: id {id} not found'}), 404
 
 @bp.route('/balance/<int:id>', methods=['GET'])
 def check_balance(id):

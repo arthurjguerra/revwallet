@@ -69,8 +69,8 @@ deploy:
 	$(MAKE) nginx
 
 db:
+	helm repo update
 	kubectl -n revwallet-dev apply -f helm/revwallet-db/secrets.yaml
-	helm repo update bitnami
 	helm -n revwallet-dev upgrade --install --values helm/revwallet-db/values.yaml revwallet-db bitnami/postgresql
 
 api:
@@ -106,6 +106,8 @@ grafana:
 
 nginx:
 	kubectl -n revwallet-dev get pods
+
+	kubectl describe pod -l app=revwallet-api
 
 	$(MAKE) stop-port-forward
 
@@ -158,7 +160,7 @@ delete-api:
 	helm -n revwallet-dev uninstall revwallet-api
 
 delete-db:
-	#kubectl -n revwallet-dev delete -f helm/revwallet-db
+	kubectl -n revwallet-dev delete -f helm/revwallet-db/secrets.yaml
 	helm -n revwallet-dev uninstall revwallet-db
 
 ################################## Utils Targets #############################

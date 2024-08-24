@@ -6,8 +6,20 @@ on:
       - 'README.md'
       - 'docs/**'
       - 'img/**'
+      - 'charts/**'
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build and push images (main)
+        if: github.ref == 'refs/heads/main'
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: arthurjguerra18/revwallet:${{ github.sha }}
+  
   tests:
+    needs: build
     secrets: inherit
     uses: ./.github/workflows/tests.yaml

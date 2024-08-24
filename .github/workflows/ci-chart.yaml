@@ -1,0 +1,11 @@
+name: CI Chart
+
+on:
+  pull_request:
+    paths:
+      - 'charts/**'
+
+jobs:
+  tests:
+    secrets: inherit
+    uses: ./.github/workflows/tests.yaml

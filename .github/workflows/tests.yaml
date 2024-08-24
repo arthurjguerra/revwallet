@@ -44,6 +44,13 @@ jobs:
         run: |
           pip install pipenv
 
+      - name: Use the image built in CI for testing
+        run: |
+          GITHUB_SHA=$(git rev-parse HEAD)
+
+          echo "Updating helm chart with new image tag $GITHUB_SHA"
+          sed -i "s|tag:.*|tag: ${GITHUB_SHA}|" helm/revwallet-api/values.yaml
+
       - name: Deploy API in K8s
         run: make create deploy
 

@@ -2,8 +2,8 @@ replicaCount: 1
 
 image:
   repository: arthurjguerra18/revwallet
-  pullPolicy: Always
-  tag: v0.5.4
+  pullPolicy: IfNotPresent
+  tag: v0.6.0
 
 imagePullSecrets: []
 nameOverride: "revwallet-api"
