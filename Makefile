@@ -69,7 +69,9 @@ deploy:
 	$(MAKE) nginx
 
 db:
-	kubectl apply -f helm/revwallet-db
+	kubectl -n revwallet-dev apply -f helm/revwallet-db/secrets.yaml
+	helm repo update bitnami
+	helm -n revwallet-dev upgrade --install --values helm/revwallet-db/values.yaml revwallet-db bitnami/postgresql
 
 api:
 	kubectl -n revwallet-dev wait --timeout=5m --for=condition=Ready pod -l app=revwallet-db
@@ -156,7 +158,8 @@ delete-api:
 	helm -n revwallet-dev uninstall revwallet-api
 
 delete-db:
-	kubectl -n revwallet-dev delete -f helm/revwallet-db
+	#kubectl -n revwallet-dev delete -f helm/revwallet-db
+	helm -n revwallet-dev uninstall revwallet-db
 
 ################################## Utils Targets #############################
 port-forward:

@@ -1,0 +1,18 @@
+nameOverride: revwallet-db
+fullnameOverride: revwallet-db
+
+global:
+  postgresql:
+    auth:
+      enablePostgresUser: true
+      username: revwallet
+      database: revwallet
+      existingSecret: revwallet-db
+      secretKeys:
+        adminPasswordKey: postgres-password
+        userPasswordKey: password
+        replicationPasswordKey: replication-password
+
+primary:
+  podLabels:
+    app: revwallet-db
