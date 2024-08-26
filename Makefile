@@ -111,6 +111,8 @@ nginx:
 
 	$(MAKE) stop-port-forward
 
+	kubectl describe pod -l app=revwallet-api
+
 	kubectl -n revwallet-dev wait --timeout=5m --for=condition=Ready pod -l app=revwallet-api
 	kubectl -n revwallet-dev wait --timeout=5m --for=condition=Ready pod -l app=prometheus
 	kubectl -n revwallet-dev wait --timeout=5m --for=condition=Ready pod -l app=grafana
