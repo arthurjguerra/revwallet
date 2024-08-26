@@ -1,4 +1,4 @@
-name: CI
+name: CI Chart
 
 on:
   pull_request:
