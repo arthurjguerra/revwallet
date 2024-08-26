@@ -50,6 +50,21 @@ class TestWalletE2E(unittest.TestCase):
     self.assertEqual(response.status_code, 200)
     self.assertEqual(float(response.json()["balance"]), 950.00)
 
+    # Delete the wallet
+    response = requests.delete(f"{self.base_url}/wallet/{wallet_id}")
+    self.assertEqual(response.status_code, 204)
+
+    # check if there is no wallet in DB after deletion
+    response = requests.get(f"{self.base_url}/wallet")
+    self.assertEqual(response.status_code, 200)
+    wallets = response.json()
+    self.assertEqual(len(wallets), 0)
+
+    # Delete a wallet that doesn't exist
+    response = requests.delete(f"{self.base_url}/wallet/{wallet_id}")
+    self.assertEqual(response.status_code, 404)
+
+
 
 if __name__ == '__main__':
   unittest.main()
