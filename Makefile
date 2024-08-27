@@ -107,10 +107,9 @@ grafana:
 nginx:
 	kubectl -n revwallet-dev get pods
 
-	kubectl describe pod -l app=revwallet-api
-
 	$(MAKE) stop-port-forward
 
+	sleep 60
 	kubectl describe pod -l app=revwallet-api
 
 	kubectl -n revwallet-dev wait --timeout=5m --for=condition=Ready pod -l app=revwallet-api
