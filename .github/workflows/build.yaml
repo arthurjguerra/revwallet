@@ -11,6 +11,8 @@ concurrency:
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.get_tag.outputs.tag }}
 
     steps:
       - name: Checkout code
@@ -42,7 +44,7 @@ jobs:
 
       - name: Update latest tag in Helm values
         run: |
-          new_revwallet_api_tag="${{ steps.get_tag.outputs.tag }}"
+          new_revwallet_api_tag="${{ needs.build-and-push-image.outputs.tag }}"
 
           echo "Set the RevWallet API image tag to $new_revwallet_api_tag in values.yaml"
           sed -i "s|tag:.*|tag: $new_revwallet_api_tag|" helm/revwallet-api/values.yaml
