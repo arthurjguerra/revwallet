@@ -105,15 +105,10 @@ grafana:
 	helm -n revwallet-dev upgrade --install --values helm/grafana/values.yaml grafana grafana/grafana
 
 nginx:
-	kubectl -n revwallet-dev get pods
-
 	$(MAKE) stop-port-forward
 
-	sleep 60
-	kubectl describe pod -l app=revwallet-api
-
-	kubectl -n revwallet-dev wait --timeout=5m --for=condition=Ready pod -l app=revwallet-api
-	kubectl -n revwallet-dev wait --timeout=5m --for=condition=Ready pod -l app=prometheus
+	kubectl -n revwallet-dev wait --timeout=3m --for=condition=Ready pod -l app=revwallet-api
+	kubectl -n revwallet-dev wait --timeout=3m --for=condition=Ready pod -l app=prometheus
 	kubectl -n revwallet-dev wait --timeout=5m --for=condition=Ready pod -l app=grafana
 
 	kubectl -n revwallet-dev delete configmap nginx-html >/dev/null 2>&1 || true
