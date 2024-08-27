@@ -1,0 +1,36 @@
+name: Compose CI
+
+on:
+  pull_request:
+    paths-ignore:
+      - 'README.md'
+      - 'docs/**'
+      - 'img/**'
+      - 'charts/**'
+
+jobs:
+  tests-compose:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        id: python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install pipenv
+        run: |
+          pip install pipenv
+
+      - name: Start containers
+        run: make compose-up
+
+      - name: Run tests for Docker Compose
+        run: make tests
+
+      - name: Stop containers
+        run: make compose-down

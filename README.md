@@ -119,12 +119,26 @@ For more information, refer to the [Prometheus Flask Exporter repository](https:
 RevWallet includes a basic dashboard accessible in Grafana:
 ![revwallet-dashboard](./docs/img/revwallet-dashboard.png)
 
-## Helm Releases
+## CICD
 When a new tag is created, a new version of the RevWallet API chart is released via Github Actions. The Charts are hosted on Github Pages and are publicly available at [ArtifactHub](https://artifacthub.io/packages/helm/revwallet/revwallet-api).
 
 ```mermaid
-flowchart LR
-  tag --> publish-chart
-  publish-chart --> pages-build-deployment
-  pages-build-deployment -- gh-pages branch --> index.yaml
+flowchart TD
+    start(((start))) --> |PR| CI
+    CI{{CI}} --> |Compose| BuildAndDeployDockerCompose[Build & Deploy Services with Docker Compose]
+    BuildAndDeployDockerCompose --> Tests
+    CI --> |Changes in charts| DeployServicesHelm
+    CI{{CI}} --> |K8s| BuildNewImage[Build New Image]
+    BuildNewImage --> DeployServicesHelm[Deploy Services with Helm]
+    DeployServicesHelm --> Tests
+    Tests --> finish((end))
+
+
+    start(((start))) -.-> |Non-PRs| CD{{CD}}
+    CD -.-> NewChartVersion[New Version of Chart]
+    NewChartVersion -.-> |CD| Tests
+    Tests -.-> |CD| PublishNewChart[Publish New Chart Version]
+    CD -.-> |New Tag| BuildNewImageVersion[Build and Publish New Image Version]
+    BuildNewImageVersion -.-> UpdateHelmValues[Update Helm Chart with New Image Version]
 ```
+

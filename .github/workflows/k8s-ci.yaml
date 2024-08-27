@@ -1,0 +1,56 @@
+name: K8s CI
+
+on:
+  pull_request:
+    paths-ignore:
+      - 'README.md'
+      - 'docs/**'
+      - 'img/**'
+      - 'charts/**'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build image ${{ github.sha }}
+        uses: docker/build-push-action@v6
+        with:
+          push: false
+          tags: arthurjguerra18/revwallet:${{ github.sha }}
+      
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        id: python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install pipenv
+        run: |
+          pip install pipenv
+
+      - name: Deploy RevWallet Dependencies in K8s
+        run:
+          make create db prometheus alloy loki grafana
+      
+      - name: Deploy API in K8s with new image tag ${{ github.sha }}
+        run: |
+          GITHUB_SHA=${{ github.sha }}
+          kubectl -n revwallet-dev wait --timeout=5m --for=condition=Ready pod -l app=revwallet-db
+          helm repo update
+          echo "Deploying API with image tag ${GITHUB_SHA}"
+          helm -n revwallet-dev install --values helm/revwallet-api/values.yaml --set image.tag=${GITHUB_SHA} revwallet-api revwallet-api/revwallet-api
+      
+      - name: Deploy Reverse Proxy in K8s
+        run: make nginx
+
+      - name: Run tests for K8s
+        run: make tests
