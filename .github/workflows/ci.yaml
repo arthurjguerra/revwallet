@@ -18,13 +18,16 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push images (main)
+      - name: Build and push image for PR
         uses: docker/build-push-action@v6
         with:
-          push: true
+          push: false
           tags: arthurjguerra18/revwallet:${{ github.sha }}
   
   tests:
     needs: build
     secrets: inherit
     uses: ./.github/workflows/tests.yaml
+    with:
+      is_ci: true
+      image_tag: ${{ github.sha }}

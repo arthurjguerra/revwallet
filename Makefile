@@ -111,6 +111,7 @@ nginx:
 
 	$(MAKE) stop-port-forward
 
+	sleep 45
 	kubectl describe pod -l app=revwallet-api
 
 	kubectl -n revwallet-dev wait --timeout=5m --for=condition=Ready pod -l app=revwallet-api

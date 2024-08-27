@@ -9,12 +9,8 @@ concurrency:
   group: ${{ github.workflow }}
 
 jobs:
-  tests:
-    secrets: inherit
-    uses: ./.github/workflows/tests.yaml
 
   build:
-    needs: tests
     runs-on: ubuntu-latest
 
     steps:
@@ -42,11 +38,17 @@ jobs:
         run: |
           new_revwallet_api_tag="${{ steps.get_tag.outputs.tag }}"
 
-          echo "Set the RevWallet API image tag to $new_revwallet_api_tag in Helm values.yaml"
+          echo "Set the RevWallet API image tag to $new_revwallet_api_tag in values.yaml"
+          sed -i "s|tag:.*|tag: $new_revwallet_api_tag|" helm/revwallet-api/values.yaml
+
+          echo "Set the RevWallet API image tag to $new_revwallet_api_tag in Chart values.yaml"
           sed -i "s|tag:.*|tag: $new_revwallet_api_tag|" charts/revwallet-api/values.yaml
 
           echo "Set RevWallet API Chart version to $new_revwallet_api_tag"
           sed -i "s|version:.*|version: $new_revwallet_api_tag|" charts/revwallet-api/Chart.yaml
+  
+      - name: Tests
+        uses: ./.github/workflows/tests.yaml
 
       - name: Create Pull Request
         id: create-pr

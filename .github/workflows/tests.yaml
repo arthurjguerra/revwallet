@@ -2,6 +2,15 @@ name: Tests
 
 on:
   workflow_call:
+    inputs:
+      is_ci:
+        type: boolean
+        required: false
+        default: false
+      image_tag:
+        type: string
+        required: false
+        default: 'latest'
 
 jobs:
   tests-compose:
@@ -45,11 +54,12 @@ jobs:
           pip install pipenv
 
       - name: Use the image built in CI for testing
+        if: inputs.is_ci == true
         run: |
-          GITHUB_SHA=$(git rev-parse HEAD)
+          TAG=$${{ inputs.image_tag }}
 
-          echo "Updating helm chart with new image tag $GITHUB_SHA"
-          sed -i "s|tag:.*|tag: ${GITHUB_SHA}|" helm/revwallet-api/values.yaml
+          echo "Updating helm chart with new image tag $TAG"
+          sed -i "s|tag:.*|tag: ${TAG}|" helm/revwallet-api/values.yaml
 
       - name: Deploy API in K8s
         run: make create deploy
