@@ -3,5 +3,5 @@ name: revwallet-api
 description: RevWallet Helm Chart
 
 type: application
-version: 
+version: v0.7.2
 appVersion: "latest"
