@@ -124,7 +124,7 @@ When a new tag is created, a new version of the RevWallet API chart is released 
 
 ```mermaid
 flowchart TD
-    start(((start))) --> |PR| CI
+    start(((start))) --> CI
     CI{{CI}} --> |Compose| BuildAndDeployDockerCompose[Build & Deploy Services with Docker Compose]
     BuildAndDeployDockerCompose --> Tests
     CI --> |Changes in charts| DeployServicesHelm
@@ -134,7 +134,7 @@ flowchart TD
     Tests --> finish((end))
 
 
-    start(((start))) -.-> |Non-PRs| CD{{CD}}
+    start(((start))) -.-> CD{{CD}}
     CD -.-> NewChartVersion[New Version of Chart]
     NewChartVersion -.-> |CD| Tests
     Tests -.-> |CD| PublishNewChart[Publish New Chart Version]
