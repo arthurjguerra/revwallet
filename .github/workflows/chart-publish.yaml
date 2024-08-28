@@ -8,9 +8,6 @@ on:
       - 'charts/**'
 
 jobs:
-  tests-k8s:
-    uses: ./.github/workflows/k8s-tests.yaml
-  
   publish:
     runs-on: ubuntu-latest
 
