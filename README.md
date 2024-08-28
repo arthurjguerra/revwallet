@@ -1,7 +1,5 @@
 ![Publish](https://github.com/arthurjguerra/revwallet/actions/workflows/chart-publish.yaml/badge.svg)
 ![Build](https://github.com/arthurjguerra/revwallet/actions/workflows/build.yaml/badge.svg)
-![K8s Tests](https://github.com/arthurjguerra/revwallet/actions/workflows/k8s-tests.yaml/badge.svg)
-![Compose Tests](https://github.com/arthurjguerra/revwallet/actions/workflows/compose-tests.yaml/badge.svg)
 [![Latest Release](https://img.shields.io/github/v/release/arthurjguerra/revwallet?include_prereleases)]([https://github.com/kubernetes/minikube/releases/latest](https://github.com/arthurjguerra/revwallet/releases/latest))
 
 # RevWallet
