@@ -8,6 +8,7 @@ on:
       - 'img/**'
       - 'charts/**'
       - 'helm/**'
+      - '.github/workflows/charts-ci.yaml'
 
 jobs:
   tests-compose:
