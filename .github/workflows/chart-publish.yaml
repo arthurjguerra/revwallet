@@ -15,18 +15,15 @@ jobs:
       contents: write # to push chart release and create a release (helm/chart-releaser-action)
 
     steps:
-      - name: Get Latest Tag
-        id: get_latest_tag
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: Checkout Latest Tag
         run: |
           echo "Fetching the latest tag of the repository..."
           latest_tag=$(git describe --tags --abbrev=0)
           echo "Latest Tag: ${latest_tag}"
-          echo "latest_tag=${latest_tag}" >> $GITHUB_OUTPUT
-
-      - name: Checkout Code
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ steps.get_latest_tag.outputs.latest_tag }}
+          git checkout ${latest_tag}
 
       - name: Set up Python
         id: python
