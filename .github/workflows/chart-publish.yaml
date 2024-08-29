@@ -19,14 +19,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          fetch-tags: true
-      
-      - name: Checkout Latest Tag
-        run: |
-          echo "Fetching the latest tag of the repository..."
-          latest_tag=$(git describe --tags --abbrev=0)
-          echo "Latest Tag: ${latest_tag}"
-          git checkout ${latest_tag}
 
       - name: Set up Python
         id: python
