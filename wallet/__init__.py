@@ -4,6 +4,8 @@ import logging
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
+from .config import Config
+
 logging.basicConfig(filename='/var/log/revwallet/revwallet.log', level=logging.INFO,
                     format='%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
 
@@ -18,17 +20,9 @@ def create_app(test_config=None):
         # test configuration
         app.config.from_mapping(test_config)
     else:
-        # production configuration
-        # app.config.from_pyfile('config.py', silent=True)
-        db_name = os.environ.get('DB_NAME')
-        db_host = os.environ.get('DB_HOST')
-        db_username = os.environ.get('DB_USERNAME')
-        db_password = os.environ.get('DB_PASSWORD')
-        db_uri = f"postgresql://{db_username}:{db_password}@{db_host}/{db_name}"
-
         app.config.from_mapping(
             SECRET_KEY='dev',
-            SQLALCHEMY_DATABASE_URI=db_uri,
+            SQLALCHEMY_DATABASE_URI=Config.DB_URI,
             SQLALCHEMY_TRACK_MODIFICATIONS=False,
         )
 
