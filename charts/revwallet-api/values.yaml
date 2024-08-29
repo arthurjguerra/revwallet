@@ -9,11 +9,12 @@ imagePullSecrets: []
 nameOverride: "revwallet-api"
 fullnameOverride: "revwallet-api"
 
-env:
-  DB_USERNAME: revwallet
-  DB_PASSWORD: mypassword
-  DB_NAME: revwallet
-  DB_HOST: revwallet-db
+credentials:
+  secret: revwallet-db
+  dbUsernameSecretKey: dbuser
+  dbPasswordSecretKey: dbpassword
+  dbNameSecretKey: dbname
+  dbHostSecretKey: dbhost
 
 serviceAccount:
   create: true

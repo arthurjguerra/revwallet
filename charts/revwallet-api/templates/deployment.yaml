@@ -38,13 +38,25 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: DB_USERNAME
-              value: {{ .Values.env.DB_USERNAME }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.credentials.secret }}
+                  key: {{ .Values.credentials.dbUsernameSecretKey }}
             - name: DB_PASSWORD
-              value: {{ .Values.env.DB_PASSWORD }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.credentials.secret }}
+                  key: {{ .Values.credentials.dbPasswordSecretKey }}
             - name: DB_NAME
-              value: {{ .Values.env.DB_NAME }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.credentials.secret }}
+                  key: {{ .Values.credentials.dbNameSecretKey }}
             - name: DB_HOST
-              value: {{ .Values.env.DB_HOST }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.credentials.secret }}
+                  key: {{ .Values.credentials.dbHostSecretKey }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
