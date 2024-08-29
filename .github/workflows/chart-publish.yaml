@@ -23,10 +23,7 @@ jobs:
           echo "Fetching the latest tag of the repository..."
           latest_tag=$(git describe --tags --abbrev=0)
           echo "Latest Tag: ${latest_tag}"
-          echo "latest_tag=${latest_tag}" >> $GITHUB_OUTPUT
-
-      - name: Checkout Code
-        uses: actions/checkout@v4
+          git checkout ${latest_tag}
 
       - name: Set up Python
         id: python
