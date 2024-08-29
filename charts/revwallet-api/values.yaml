@@ -16,12 +16,6 @@ credentials:
   dbNameSecretKey: dbname
   dbHostSecretKey: dbhost
 
-env:
-  DB_USERNAME: revwallet
-  DB_PASSWORD: mypassword
-  DB_NAME: revwallet
-  DB_HOST: revwallet-db
-
 serviceAccount:
   create: true
   automount: true
