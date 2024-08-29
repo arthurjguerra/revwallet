@@ -1,6 +1,6 @@
 image:
   repository: arthurjguerra18/revwallet
-  tag: v0.7.11
+  tag: v0.7.12
   
 env:
   DB_USERNAME: revwallet
