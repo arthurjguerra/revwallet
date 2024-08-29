@@ -3,6 +3,16 @@ entries:
   revwallet-api:
   - apiVersion: v2
     appVersion: latest
+    created: "2024-08-29T13:38:43.321591846Z"
+    description: RevWallet Helm Chart
+    digest: dcc59ee1075d8819220c3488514d42cc32d45b4f8feb089e4d1d9ba127620084
+    name: revwallet-api
+    type: application
+    urls:
+    - https://github.com/arthurjguerra/revwallet/releases/download/revwallet-api-v0.7.9/revwallet-api-v0.7.9.tgz
+    version: v0.7.9
+  - apiVersion: v2
+    appVersion: latest
     created: "2024-08-26T19:56:09.919645812Z"
     description: RevWallet Helm Chart
     digest: 7bea37c87f78fddc78a515dce430b4e29c73988c77a1854a6799b53b51f03fe7
@@ -41,4 +51,4 @@ entries:
     urls:
     - https://github.com/arthurjguerra/revwallet/releases/download/revwallet-api-0.0.1/revwallet-api-0.0.1.tgz
     version: 0.0.1
-generated: "2024-08-26T19:56:09.919667142Z"
+generated: "2024-08-29T13:38:43.321619167Z"
