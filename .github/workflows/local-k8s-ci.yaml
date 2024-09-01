@@ -1,4 +1,4 @@
-name: K8s CI
+name: Local K8s CI
 
 on:
   pull_request:
@@ -8,6 +8,7 @@ on:
       - 'img/**'
       - 'charts/**'
       - '.github/workflows/charts-ci.yaml'
+      - '.github/workflows/tf-ci.yaml'
 
 jobs:
   build-and-test:
