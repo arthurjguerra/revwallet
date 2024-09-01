@@ -126,7 +126,8 @@ flowchart TD
     start(((start))) --> CI
     CI{{CI}} --> |Compose| BuildAndDeployDockerCompose[Build & Deploy Services with Docker Compose]
     BuildAndDeployDockerCompose --> Tests
-    CI --> |Changes in charts| DeployServicesHelm
+    CI --> |Changes in Charts| DeployServicesHelm
+    CI --> |Changes in Terraform| TerraformValidation[Validate Terraform files]
     CI{{CI}} --> |K8s| BuildNewImage[Build New Image]
     BuildNewImage --> DeployServicesHelm[Deploy Services with Helm]
     DeployServicesHelm --> Tests
