@@ -40,7 +40,7 @@ jobs:
 
       - name: Deploy RevWallet Dependencies in K8s
         run:
-          make create db prometheus alloy loki grafana
+          make local-create local-db local-prometheus local-alloy local-loki local-grafana
       
       - name: Deploy API in K8s with new image tag ${{ github.sha }}
         run: |
@@ -51,7 +51,7 @@ jobs:
           helm -n revwallet-dev install --values helm/revwallet-api/values.yaml --set image.tag=${GITHUB_SHA} revwallet-api revwallet-api/revwallet-api
       
       - name: Deploy Reverse Proxy in K8s
-        run: make nginx
+        run: make local-nginx
 
       - name: Run tests for K8s
         run: make tests

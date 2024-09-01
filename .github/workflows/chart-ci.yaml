@@ -25,17 +25,17 @@ jobs:
           pip install pipenv
 
       - name: Create K8s clusters
-        run: make create 
+        run: make local-create 
         
       - name: Deploy Services
-        run: make db prometheus alloy loki grafana
+        run: make local-db local-prometheus local-alloy local-loki local-grafana
 
       - name: Deploy RevWallet API (chart from current branch)
         run: |
           helm -n revwallet-dev install --values helm/revwallet-api/values.yaml revwallet-api charts/revwallet-api
           
       - name: Deploy Nginx
-        run: make nginx
+        run: make local-nginx
 
       - name: Run tests for K8s
         run: make tests
