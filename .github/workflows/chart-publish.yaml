@@ -32,7 +32,7 @@ jobs:
 
       - name: Deploy RevWallet 
         run:
-          make create deploy
+          make local-create local-deploy
       
       - name: Run tests for K8s
         run: make tests
