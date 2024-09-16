@@ -1,5 +1,6 @@
 image:
   repository: arthurjguerra18/revwallet
+  pullPolicy: Never
   tag: v0.7.12
   
 env:
