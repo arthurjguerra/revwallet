@@ -1,4 +1,4 @@
-name: Local K8s CI (by @${{ github.actor }})
+name: Local K8s CI
 
 on:
   pull_request_target:
