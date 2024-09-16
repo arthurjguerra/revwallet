@@ -8,7 +8,9 @@ on:
       - 'img/**'
       - 'charts/**'
       - 'helm/**'
+      - 'terraform/**'
       - '.github/workflows/charts-ci.yaml'
+      - '.github/workflows/tf-ci.yaml'
 
 jobs:
   tests-compose:
