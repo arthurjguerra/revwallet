@@ -8,6 +8,7 @@ on:
       - 'img/**'
       - 'charts/**'
       - 'helm/**'
+      - 'terraform/**'
       - '.github/workflows/charts-ci.yaml'
 
 jobs:
