@@ -1,7 +1,7 @@
 name: Local K8s CI
 
 on:
-  pull_request:
+  pull_request_target:
     paths-ignore:
       - 'README.md'
       - 'docs/**'
@@ -12,6 +12,7 @@ on:
 
 jobs:
   build-and-test:
+    if: github.action == 'dependabot[bot]' || github.actor == 'arthurjguerra'
     runs-on: ubuntu-latest
     steps:
       - name: Login to Docker Hub
