@@ -5,14 +5,14 @@ Wallet API where users can deposit, withdraw, and check the balance of a wallet.
 RevWallet is a [Flask](https://flask.palletsprojects.com/en/3.0.x/) application that runs on Docker. To get started, ensure you have the following dependencies installed on your system:
 - [Docker](https://docs.docker.com/guides/getting-started/)
 - [Docker Compose](https://docs.docker.com/compose/gettingstarted/)
-- [Python 3.11](https://www.python.org/downloads/)
+- [Python 3.12](https://www.python.org/downloads/)
 - [Pipenv](https://pipenv.pypa.io/en/latest/)
 
 If you use `brew`, you can install the necessary dependencies by running:
 ```
 brew install docker
 brew install docker-compose
-brew install python@3.11
+brew install python@3.12
 brew install pipenv
 ```
 
@@ -22,7 +22,7 @@ To run RevWallet locally using Docker Compose, follow these steps:
 1. Start by activating the virtual environment and installing the dependencies:
 ```
 pipenv shell
-pipenv install -e .
+pipenv install
 ```
 2. Build the Docker images and run the containers:
 ```

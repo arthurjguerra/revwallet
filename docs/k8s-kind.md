@@ -9,7 +9,7 @@ RevWallet is a [Flask](https://flask.palletsprojects.com/en/3.0.x/) application 
 - [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
 - [Kubectl](https://kubernetes.io/docs/reference/kubectl/)
 - [Helm](https://helm.sh/docs/intro/quickstart/)
-- [Python 3.11](https://www.python.org/downloads/)
+- [Python 3.12](https://www.python.org/downloads/)
 - [Pipenv](https://pipenv.pypa.io/en/latest/)
 
 If you use `brew`, you can install the necessary dependencies by running:
@@ -17,7 +17,7 @@ If you use `brew`, you can install the necessary dependencies by running:
 brew install docker
 brew install kind
 brew install helm
-brew install python@3.11
+brew install python@3.12
 brew install pipenv
 ```
 
