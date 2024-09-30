@@ -53,12 +53,12 @@ RevWallet is a [Flask](https://flask.palletsprojects.com/en/3.0.x/) application 
 - [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
 - [Kubectl](https://kubernetes.io/docs/reference/kubectl/)
 - [Helm](https://helm.sh/docs/intro/quickstart/)
-- [Python 3.11](https://www.python.org/downloads/)
+- [Python 3.12](https://www.python.org/downloads/)
 - [Pipenv](https://pipenv.pypa.io/en/latest/)
 
 To install dependencies via `brew`:
 ```
-brew install docker docker-compose kind helm python@3.11 pipenv
+brew install docker docker-compose kind helm python@3.12 pipenv
 ```
 
 ## Running RevWallet with Docker Compose
